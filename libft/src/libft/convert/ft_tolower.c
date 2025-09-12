@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/05 21:28:27 by dnahon            #+#    #+#             */
+/*   Updated: 2025/04/28 16:23:18 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
-
-int validate_args(int ac, char **av)
+int	ft_tolower(int c)
 {
-    if (ac != 3)
-        ft_putstr_fd();
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
 }
-
+/*
 int	main(void)
 {
+	int		c;
+	char	*str;
+
+	c = 'A';
+	str = "HELLO";
+	printf("%c\n", ft_tolower(c));
+	printf("%s\n", str);
+	return (0);
 }
+ */

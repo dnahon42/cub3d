@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_nmax.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/06 21:29:38 by dnahon            #+#    #+#             */
+/*   Updated: 2025/03/07 14:20:35 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
-
-int validate_args(int ac, char **av)
+int	ft_nmax(int n, int *tab)
 {
-    if (ac != 3)
-        ft_putstr_fd();
-}
+	int	i;
+	int	max;
 
-int	main(void)
-{
+	i = 0;
+	max = tab[i];
+	while (i < n)
+	{
+		if (tab[i] > max)
+			max = tab[i];
+		i++;
+	}
+	return (max);
 }

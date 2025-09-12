@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/05 18:41:15 by dnahon            #+#    #+#             */
+/*   Updated: 2025/04/30 18:12:04 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include <stdio.h>
 
-int validate_args(int ac, char **av)
+int	ft_isalnum(int c)
 {
-    if (ac != 3)
-        ft_putstr_fd();
-}
-
-int	main(void)
-{
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
+			&& c <= '9'));
 }

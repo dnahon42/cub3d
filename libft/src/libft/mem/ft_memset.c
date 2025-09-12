@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/05 20:35:16 by dnahon            #+#    #+#             */
+/*   Updated: 2025/04/28 16:26:18 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include <stddef.h>
 
-int validate_args(int ac, char **av)
+void	*ft_memset(void *b, int c, size_t len)
 {
-    if (ac != 3)
-        ft_putstr_fd();
+	while (len--)
+		((unsigned char *)b)[len] = (unsigned char)c;
+	return (b);
 }
-
+/*
 int	main(void)
 {
+	char	str[50];
+
+	ft_memset(str, 'A', 5);
+	str[5] = '\0';
+	return (0);
 }
+ */
