@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/04/28 14:46:38 by dnahon            #+#    #+#             */
+/*   Updated: 2025/07/23 18:57:49 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include "../../../includes/libft.h"
 
-int validate_args(int ac, char **av)
+void	ft_lstadd_front(t_list **lst, t_list *new_lst)
 {
-    if (ac != 3)
-        ft_putstr_fd();
+	if (!lst || !new_lst)
+		return ;
+	new_lst->next = *lst;
+	*lst = new_lst;
 }
 
-int	main(void)
+/* int	main(void)
 {
-}
+	t_list	*lst;
+	t_list	*new;
+
+	lst = ft_lstnew("Hello");
+	new = ft_lstnew("World");
+	ft_lstadd_front(&lst, new);
+	printf("%s\n", (char *)lst->content);
+	printf("%s\n", (char *)lst->next->content);
+	return (0);
+} */

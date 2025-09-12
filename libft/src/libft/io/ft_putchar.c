@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/06 20:24:56 by dnahon            #+#    #+#             */
+/*   Updated: 2025/04/28 16:23:49 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include <unistd.h>
 
-int validate_args(int ac, char **av)
+void	ft_putchar(char c)
 {
-    if (ac != 3)
-        ft_putstr_fd();
+	write(1, &c, 1);
 }
-
+/*
 int	main(void)
 {
+	char	c;
+
+	c = 'A';
+	ft_putchar(c);
+	return (0);
 }
+ */

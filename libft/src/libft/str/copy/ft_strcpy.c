@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/06 20:31:40 by dnahon            #+#    #+#             */
+/*   Updated: 2025/04/28 16:28:32 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
-
-int validate_args(int ac, char **av)
+char	*ft_strcpy(char *dest, const char *src)
 {
-    if (ac != 3)
-        ft_putstr_fd();
-}
+	int	i;
 
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+/*
 int	main(void)
 {
+	char		dest[50];
+	const char	*src = "Hello, World!";
+
+	ft_strcpy(dest, src);
+	printf("Copied string: %s\n", dest);
+	return (0);
 }
+ */

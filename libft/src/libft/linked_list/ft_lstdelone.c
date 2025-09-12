@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/04/28 17:26:04 by dnahon            #+#    #+#             */
+/*   Updated: 2025/06/06 16:14:05 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include "../../../includes/libft.h"
 
-int validate_args(int ac, char **av)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-    if (ac != 3)
-        ft_putstr_fd();
+	if (!lst || !del)
+		return ;
+	if (lst->content)
+		del(lst->content);
+	ft_free(lst);
 }
-
+/*
 int	main(void)
 {
+	t_list	*lst;
+	t_list	*new;
+
+	lst = ft_lstnew("Hello");
+	new = ft_lstnew("World");
+	lst->next = new;
+	ft_lstdelone(lst, ft_free);
+	return (0);
 }
+ */

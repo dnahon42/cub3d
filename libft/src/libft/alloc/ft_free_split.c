@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/06/27 15:41:47 by dnahon            #+#    #+#             */
+/*   Updated: 2025/06/27 15:42:00 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include "../../../includes/libft.h"
 
-int validate_args(int ac, char **av)
+void	ft_free_split(char **split)
 {
-    if (ac != 3)
-        ft_putstr_fd();
-}
+	int	i;
 
-int	main(void)
-{
+	i = 0;
+	if (!split)
+		return ;
+	while (split[i])
+	{
+		ft_free(split[i]);
+		i++;
+	}
+	ft_free(split);
 }
