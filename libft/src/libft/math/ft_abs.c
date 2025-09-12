@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/06 21:30:02 by dnahon            #+#    #+#             */
+/*   Updated: 2025/03/07 14:20:35 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
-
-int validate_args(int ac, char **av)
+int	ft_abs(int n)
 {
-    if (ac != 3)
-        ft_putstr_fd();
-}
-
-int	main(void)
-{
+	if (n < 0)
+		return (-n);
+	return (n);
 }

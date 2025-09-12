@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/04/28 15:07:26 by dnahon            #+#    #+#             */
+/*   Updated: 2025/06/06 16:14:01 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include "../../../includes/libft.h"
 
-int validate_args(int ac, char **av)
+t_list	*ft_lstlast(t_list *lst)
 {
-    if (ac != 3)
-        ft_putstr_fd();
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
 
+/*
 int	main(void)
 {
+	t_list	*lst;
+	t_list	*last;
+
+	lst = ft_lstnew("Hello");
+	ft_lstadd_back(&lst, ft_lstnew("World"));
+	last = ft_lstlast(lst);
+	printf("%s\n", (char *)last->content);
+	return (0);
 }
+*/

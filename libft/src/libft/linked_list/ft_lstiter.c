@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/04/28 17:55:35 by dnahon            #+#    #+#             */
+/*   Updated: 2025/06/06 16:14:03 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include "../../../includes/libft.h"
 
-int validate_args(int ac, char **av)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-    if (ac != 3)
-        ft_putstr_fd();
+	if (!f)
+		return ;
+	while (lst)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
 }
-
+/*
 int	main(void)
 {
+	t_list	*lst;
+	t_list	*new;
+
+	lst = ft_lstnew("Hello");
+	new = ft_lstnew("World");
+	lst->next = new;
+	ft_lstiter(lst, &ft_putstr);
+	return (0);
 }
+ */

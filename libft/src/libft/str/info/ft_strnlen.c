@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/12 16:36:47 by dnahon           ###   ########.fr       */
+/*   Created: 2025/03/05 20:32:15 by dnahon            #+#    #+#             */
+/*   Updated: 2025/04/28 16:29:10 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cube3d.h"
+#include <stddef.h>
 
-int validate_args(int ac, char **av)
+size_t	ft_strnlen(const char *s, size_t maxlen)
 {
-    if (ac != 3)
-        ft_putstr_fd();
-}
+	size_t	i;
 
-int	main(void)
-{
+	i = 0;
+	while (s[i] && i < maxlen)
+		i++;
+	return (i);
 }
