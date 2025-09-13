@@ -8,8 +8,12 @@ LDFLAGS		= 	-lreadline -Llibft -lft
 AR 			= 	ar rcs
 RM 			= 	rm -f
 
-SRC_DIR 	= 	./src
-SRC 		= main.c	
+SRC_DIR 	= 	./srcs
+SRC 		= 	./srcs/main.c ./srcs/parsing/set_colors.c ./srcs/parsing/set_map.c \
+				./srcs/parsing/set_textures.c ./srcs/parsing/utils.c \
+				./srcs/parsing/verify_textures_and_colors.c ./srcs/parsing/check_borders.c \
+				./srcs/parsing/check_map_elements.c \
+				
 LIBFT 		= 	./libft/libft.a
 INCLUDES	= 	./includes/cub3d.h ./libft/includes/libft.h
 

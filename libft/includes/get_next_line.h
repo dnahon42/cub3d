@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:18:09 by dnahon            #+#    #+#             */
-/*   Updated: 2025/08/01 05:01:22 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:02:35 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
+char	*ft_strchr3(const char *s, int c);
 char	*ft_strjoin2(char *s1, char *s2);
 char	*extract_line(char *stash);
 char	*update_stash(char *stash);
