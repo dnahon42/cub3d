@@ -6,7 +6,7 @@
 /*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/13 18:13:44 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/13 22:41:33 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,15 @@ typedef struct s_map
 	void	*mlx;
 	void	*win;
 	void	*player;
+	void	*mur;
+	void	*sol;
+	void	*droite;
+	int		flag_col;
 	int		img_width;
 	int		img_height;
+	int		mapx;
+	int		mapy;
+	int		dir_x;
+	int		dir_y;
 }			t_map;
 #endif

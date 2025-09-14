@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/12 15:43:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/13 18:36:25 by kiteixei         ###   ########.fr       */
+/*   Created: 2025/09/13 21:09:29 by kiteixei          #+#    #+#             */
+/*   Updated: 2025/09/14 10:57:29 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,47 @@
 
 void	draw_player(t_map *map)
 {
-	map->pos_x = 1;
-	map->pos_y = 1;
+	map->pos_x = 0;
+	map->pos_y = 0;
 	map->player = mlx_xpm_file_to_image(map->mlx, "player/point.xpm",
 			&map->img_height, &map->img_width);
-	mlx_put_image_to_window(map->mlx, map->win, map->player, map->pos_x * 10,
-		map->pos_y * 10);
+	map->droite = mlx_xpm_file_to_image(map->mlx, "player/ligne.xpm",
+			&map->img_height, &map->img_width);
+	map->mur = mlx_xpm_file_to_image(map->mlx, "player/mur.xpm",
+			&map->img_height, &map->img_width);
+	map->sol = mlx_xpm_file_to_image(map->mlx, "player/sol.xpm",
+			&map->img_height, &map->img_width);
+	mlx_put_image_to_window(map->mlx, map->win, map->player, map->pos_x * 200,
+		map->pos_y * 200);
+}
+
+void	draw_map(t_map *map)
+{
+	int	y;
+	int	x;
+	int	play[] = {1, 1, 1, 0, 1, 0, 1, 1, 1};
+
+	map->mapx = 3;
+	map->mapy = 3;
+	y = 0;
+	x = 0;
+	while (y < map->mapy)
+	{
+		x = 0;
+		while (x < map->mapx)
+		{
+			if (play[y * map->mapx + x] == 1)
+			{
+				mlx_put_image_to_window(map->mlx, map->win, map->mur, x * 200, y
+					* 200);
+			}
+			else
+				mlx_put_image_to_window(map->mlx, map->win, map->sol, x * 200, y
+					* 200);
+			x++;
+		}
+		y++;
+	}
 }
 
 void	ft_moove(t_map *map)
@@ -48,8 +83,9 @@ void	init_flag(t_map *map)
 void	render_player(t_map *map)
 {
 	mlx_clear_window(map->mlx, map->win);
-	mlx_put_image_to_window(map->mlx, map->win, map->player, map->pos_x * 10,
-		map->pos_y * 10);
+	draw_map(map);
+	mlx_put_image_to_window(map->mlx, map->win, map->player, map->pos_x * 200,
+		map->pos_y * 200);
 }
 
 int	refresh(void *param)
