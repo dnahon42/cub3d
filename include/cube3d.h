@@ -6,7 +6,7 @@
 /*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/13 22:41:33 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/15 23:50:21 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 # define CUBE3D_H
 
 # include "../minilibx-linux/mlx.h"
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-
+# ifndef HEIGHT
+#  define HEIGHT 1000
+# endif
+# ifndef WIDTH
+#  define WIDTH 1000
+# endif
 # ifndef KEY_LEFT
 #  define KEY_LEFT 97
 # endif
@@ -33,32 +39,59 @@
 # ifndef KEY_EXIT
 #  define KEY_EXIT 65307
 # endif
+# ifndef KEY__ROT_LEFT
+#  define KEY_ROT_LEFT 65361
+# endif
+# ifndef KEY_ROT_RIGHT
+#  define KEY_ROT_RIGHT 65363
+# endif
+typedef struct s_tex
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		height;
+	int		width;
+}			t_tex;
 
 typedef struct s_map
 {
+	void	*mlx;
+	void	*win;
+	t_tex	buffer;
+	t_tex	mur;
+	t_tex	sol;
+
 	int		flag_w;
 	int		flag_s;
 	int		flag_a;
 	int		flag_d;
 	int		flag_exit;
+	int		flag_right;
+	int		flag_left;
+	int		img_height;
+	int		img_width;
 	float	pos_y;
 	float	pos_x;
 	float	new_pos_y;
 	float	new_pos_x;
+
 	int		x;
 	int		y;
-	void	*mlx;
-	void	*win;
 	void	*player;
-	void	*mur;
-	void	*sol;
 	void	*droite;
 	int		flag_col;
-	int		img_width;
-	int		img_height;
 	int		mapx;
 	int		mapy;
-	int		dir_x;
-	int		dir_y;
+	double	dir_x;
+	double	dir_y;
+	float	angle;
+	float	cx;
+	float	cy;
+	int		r;
+	float	move_speed;
+	float	rot_speed;
 }			t_map;
 #endif
