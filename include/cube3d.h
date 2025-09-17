@@ -6,14 +6,14 @@
 /*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/17 03:40:44 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:42:28 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE3D_H
 # define CUBE3D_H
-# define MAPX 10
-# define MAPY 10
+# define MAPX 5
+# define MAPY 4
 
 # include "../minilibx-linux/mlx.h"
 # include <math.h>

@@ -6,7 +6,7 @@
 /*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 21:09:29 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/17 03:59:15 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/17 17:07:09 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,15 @@ void	draw_square(t_map *map, int x, int y, int color)
 		dy++;
 	}
 }
+
 void	draw_map(t_map *map)
 {
 	int	y;
 	int	x;
-	int	tmp[200] = {1, 1, 1, 0, 0, 1, 1, 1, 1};
+	int	tmp[20] = {1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1};
 
-	map->mapx = 3;
-	map->mapy = 3;
+	map->mapx = 5;
+	map->mapy = 4;
 	memcpy(map->play, tmp, sizeof(tmp));
 	x = 0;
 	while (x < map->mapx)
@@ -139,7 +140,7 @@ void	draw_map(t_map *map)
 void	ft_moove(t_map *map)
 {
 	map->move_speed = 2;
-	map->rot_speed = 2;
+	map->rot_speed = 0.2;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;
 	if (map->flag_w)
@@ -163,7 +164,7 @@ void	ft_moove(t_map *map)
 		map->new_pos_y -= map->dir_x * map->move_speed;
 	}
 	if (map->flag_left)
-		map->angle -= map->move_speed;
+		map->angle -= map->rot_speed;
 	if (map->flag_right)
 		map->angle += map->rot_speed;
 	map->dir_x = cos(map->angle);
@@ -257,34 +258,38 @@ int	key_release(int keycode, void *param)
 		map->flag_w = 0;
 	else if (keycode == KEY_DOWN)
 		map->flag_s = 0;
+	else if (keycode == KEY_ROT_RIGHT)
+		map->flag_right = 0;
+	else if (keycode == KEY_ROT_LEFT)
+		map->flag_left = 0;
 	else if (keycode == KEY_EXIT)
 		map->flag_exit = 0;
 	return (refresh(map));
 }
 
-// void	draw_ray(t_ray *ray)
-// {
-// 	int	x;
-// 	int	y;
-// 	int	i;
-//
-// 	ray->map->cx = ray->dx;
-// 	ray->map->cy = ray->dy;
-// 	ray->ra = ray->map->angle;
-// 	ray->dof = 0;
-// 	while (ray->dof < TILE_SIZE)
-// 	{
-// 		if (ray->ra > 0 && ray->ra < M_PI)
-// 			ray->dy = +TILE_SIZE;
-// 		else
-// 			ray->dy = -TILE_SIZE;
-// 		ray->dx = ray->dy / tan(ray->ra);
-// 		if (ray->map->play[ray->dy][ray->dx] == 1)
-// 			my_pixel_put(ray->& map.buffer, ray->dx, ray->dy, 0xE8FF00);
-// 		ray->dof++:
-// 	}
-// }
-
+void	draw_ray(t_ray *ray, t_map *map)
+{
+	// position du player au moment ou je draw_ray
+	ray->map->cx = ray->dx;
+	ray->map->cy = ray->dy;
+	ray->ra = ray->map->angle;
+	// Reset le ra si jamais on est sup a 360 degrer
+	if (ray->ra < 0)
+		ray->ra += 2 * M_PI;
+	if (ray->ra > 2 * M_PI)
+		ray->ra -= 2 * M_PI;
+	ray->dof = 0;
+	// boucle principale qui print
+	while (ray->dof < TILE_SIZE)
+	{
+		if (ray->ra > 0 && ray->ra < M_PI)
+			ray->dy = +TILE_SIZE;
+		else
+			ray->dy = -TILE_SIZE;
+		my_pixel_put(&map->buffer, ray->dx, ray->dy, 0xDAFF08);
+		ray->dof++;
+	}
+}
 int	main(void)
 {
 	t_map	map;
