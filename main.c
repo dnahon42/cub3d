@@ -6,7 +6,7 @@
 /*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 21:09:29 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/16 00:12:37 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/17 03:59:15 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	init_texture(t_map *map)
 {
 	map->pos_x = 0;
 	map->pos_y = 0;
+	map->cx = WIDTH / 2;
+	map->cy = HEIGHT / 2;
 	map->mur.img = mlx_xpm_file_to_image(map->mlx, "player/mur.xpm",
 			&map->mur.width, &map->mur.height);
 	map->mur.addr = mlx_get_data_addr(map->mur.img, &map->mur.bpp,
@@ -94,10 +96,10 @@ void	draw_square(t_map *map, int x, int y, int color)
 	int	dy;
 
 	dy = 0;
-	while (dy < 100)
+	while (dy < TILE_SIZE)
 	{
 		dx = 0;
-		while (dx < 100)
+		while (dx < TILE_SIZE)
 		{
 			if (dx == 0 || dy == 0)
 				my_pixel_put(&map->buffer, x * 100 + dx, y * 100 + dy,
@@ -113,18 +115,18 @@ void	draw_map(t_map *map)
 {
 	int	y;
 	int	x;
-	int	play[] = {1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			1, 1, 1};
+	int	tmp[200] = {1, 1, 1, 0, 0, 1, 1, 1, 1};
 
-	map->mapx = 4;
-	map->mapy = 6;
+	map->mapx = 3;
+	map->mapy = 3;
+	memcpy(map->play, tmp, sizeof(tmp));
 	x = 0;
 	while (x < map->mapx)
 	{
 		y = 0;
 		while (y < map->mapy)
 		{
-			if (play[y * map->mapx + x] == 1)
+			if (map->play[y][x] == 1)
 				draw_square(map, x, y, 0x828282);
 			else
 				draw_square(map, x, y, 0xFFFFFF);
@@ -260,9 +262,33 @@ int	key_release(int keycode, void *param)
 	return (refresh(map));
 }
 
+// void	draw_ray(t_ray *ray)
+// {
+// 	int	x;
+// 	int	y;
+// 	int	i;
+//
+// 	ray->map->cx = ray->dx;
+// 	ray->map->cy = ray->dy;
+// 	ray->ra = ray->map->angle;
+// 	ray->dof = 0;
+// 	while (ray->dof < TILE_SIZE)
+// 	{
+// 		if (ray->ra > 0 && ray->ra < M_PI)
+// 			ray->dy = +TILE_SIZE;
+// 		else
+// 			ray->dy = -TILE_SIZE;
+// 		ray->dx = ray->dy / tan(ray->ra);
+// 		if (ray->map->play[ray->dy][ray->dx] == 1)
+// 			my_pixel_put(ray->& map.buffer, ray->dx, ray->dy, 0xE8FF00);
+// 		ray->dof++:
+// 	}
+// }
+
 int	main(void)
 {
-	t_map(map) = {0};
+	t_map	map;
+
 	map.mlx = mlx_init();
 	if (!map.mlx)
 		return (1);
