@@ -12,9 +12,9 @@
 
 #ifndef CUBE3D_H
 # define CUBE3D_H
-# define MAPX 5
-# define MAPY 4
-
+# define MAPX 21
+# define MAPY 21
+#define FOV 1,0472
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdio.h>
@@ -100,7 +100,7 @@ typedef struct s_map
 	float	pos_x;
 	float	new_pos_y;
 	float	new_pos_x;
-
+  int square_printed;
 	int		x;
 	int		y;
 	void	*player;

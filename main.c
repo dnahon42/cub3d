@@ -96,33 +96,56 @@ void	draw_square(t_map *map, int x, int y, int color)
 	int	dy;
 
 	// case to pixel
-	dy = 0;
-	while (dy < TILE_SIZE)
-	{
-		dx = 0;
-		while (dx < TILE_SIZE)
-		{
-			if (dx == 0 || dy == 0)
-				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy,
-					0x000000);
-			else
-				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy, color);
-			dx++;
-		}
-		dy++;
-	}
+	  dy = 0;
+	  while (dy < TILE_SIZE)
+	  {
+		  dx = 0;
+		  while (dx < TILE_SIZE)
+		  {
+			  if (dx == 0 || dy == 0)
+				  my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy,
+					  0x000000);
+		  	else
+				  my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy, color);
+			  dx++;
+		  }
+		  dy++;
+      map->square_printed = 1;
+	  }
+  
 }
 
 void	draw_map(t_map *map)
 {
 	int	y;
 	int	x;
-	int	tmp[48] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,
-			0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
-			1, 1, 1, 1, 1};
+	
+int tmp[441] = {
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
+    1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,0,1,
+    1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,
+    1,1,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,0,1,1,
+    1,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1,
+    1,0,1,1,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,
+    1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,1,0,
+    1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,
+    1,0,1,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,1,
+    1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,
+    1,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1,
+    1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,
+    1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,
+    1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,
+    1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,
+    1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,
+    1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
+    1,0,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,
+    1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+};
 
-	map->mapx = 8;
-	map->mapy = 6;
+	map->mapx = 21;
+	map->mapy = 21;
 	map->play = malloc(sizeof(int) * map->mapx * map->mapy);
 	if (!map->play)
 		exit(1);
@@ -216,7 +239,6 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 	int	sy;
 	int	err;
 	int	e2;
-
 	dx = abs(x1 - x0);
 	dy = -abs(y1 - y0);
 	sx = (x0 < x1);
@@ -229,7 +251,7 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 	while (1)
 	{
 		my_pixel_put(&map->buffer, x0, y0, color);
-		if (x0 == x1 && y0 == y1)
+    if (x0 == x1 && y0 == y1)
 			break ;
 		e2 = 2 * err;
 		if (e2 >= dy)
@@ -252,7 +274,6 @@ void	draw_ray(t_map *map, t_ray *ray)
 	// start joueur
 	ray->rx = map->cx;
 	ray->ry = map->cy;
-	ray->ra = map->angle;
 
 	// reset angle
 	if (ray->ra < 0) 
@@ -263,7 +284,9 @@ void	draw_ray(t_map *map, t_ray *ray)
 	// direction
 	double step = 1; // preci du rayon (px)
 	double dx = cos(ray->ra) * step;
+  printf("%lf\n",dx);
 	double dy = sin(ray->ra) * step;
+  printf("%lf\n",dy);
 
 	// avancer jusqu’a un murrrrr
 	while (1)
@@ -271,6 +294,7 @@ void	draw_ray(t_map *map, t_ray *ray)
 		ray->rx += dx;
 		ray->ry += dy;
 
+    //pixel to case
 		x = (int)(ray->rx / TILE_SIZE);
 		y = (int)(ray->ry / TILE_SIZE);
 
@@ -280,20 +304,37 @@ void	draw_ray(t_map *map, t_ray *ray)
 
 		// si mur trouver -> stop
 		if (map->play[y * map->mapx + x] == 1)
+    {
+      printf("GG MUR TROUVER BG\n");
 			break;
+    }
+    
 	}
-
-	// tracer une ligne depuis joueur 
-	draw_line(map, map->cx, map->cy, (int)ray->rx, (int)ray->ry, 0xDAFF08);
+    draw_line(map, map->cx, map->cy, (int)ray->rx, (int)ray->ry, 0xDAFF08);
 }
 
+void ft_draw_all_ray(t_map *map,t_ray *ray)
+{
+  int i = 0;
+  double fov;
+  fov = 60 * (M_PI /180);
+  double angle_step;
+  angle_step = fov / (double)WIDTH;
+
+  while(i < WIDTH)
+  {
+    ray->ra = map->angle - fov / 2 + i * angle_step;
+    draw_ray(map,ray);
+    i++;
+  }
+}
 
 int	render_frame(t_map *map)
 {
-	clear_image(map, 0x000000);
-	draw_map(map);
+	// clear_image(map, 0x000000);
+  draw_map(map);
 	draw_player(map);
-	draw_ray(map, map->ray);
+	ft_draw_all_ray(map, map->ray);
 	mlx_put_image_to_window(map->mlx, map->win, map->buffer.img, 0, 0);
 	return (0);
 }
@@ -354,6 +395,7 @@ int	key_release(int keycode, void *param)
 		map->flag_exit = 0;
 	return (refresh(map));
 }
+
 int main(void)
 {
     t_map map = (t_map){0};    
