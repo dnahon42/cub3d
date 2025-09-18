@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 21:09:29 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/17 17:07:09 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/18 02:19:02 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	init_texture(t_map *map)
 {
 	map->pos_x = 0;
 	map->pos_y = 0;
-	map->cx = WIDTH / 2;
-	map->cy = HEIGHT / 2;
+	map->cx = (int)WIDTH / 2;
+	map->cy = (int)HEIGHT / 2;
 	map->mur.img = mlx_xpm_file_to_image(map->mlx, "player/mur.xpm",
 			&map->mur.width, &map->mur.height);
 	map->mur.addr = mlx_get_data_addr(map->mur.img, &map->mur.bpp,
@@ -95,6 +95,7 @@ void	draw_square(t_map *map, int x, int y, int color)
 	int	dx;
 	int	dy;
 
+	// case to pixel
 	dy = 0;
 	while (dy < TILE_SIZE)
 	{
@@ -102,10 +103,10 @@ void	draw_square(t_map *map, int x, int y, int color)
 		while (dx < TILE_SIZE)
 		{
 			if (dx == 0 || dy == 0)
-				my_pixel_put(&map->buffer, x * 100 + dx, y * 100 + dy,
+				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy,
 					0x000000);
 			else
-				my_pixel_put(&map->buffer, x * 100 + dx, y * 100 + dy, color);
+				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy, color);
 			dx++;
 		}
 		dy++;
@@ -116,10 +117,15 @@ void	draw_map(t_map *map)
 {
 	int	y;
 	int	x;
-	int	tmp[20] = {1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1};
+	int	tmp[48] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+			0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
+			1, 1, 1, 1, 1};
 
-	map->mapx = 5;
-	map->mapy = 4;
+	map->mapx = 8;
+	map->mapy = 6;
+	map->play = malloc(sizeof(int) * map->mapx * map->mapy);
+	if (!map->play)
+		exit(1);
 	memcpy(map->play, tmp, sizeof(tmp));
 	x = 0;
 	while (x < map->mapx)
@@ -127,7 +133,7 @@ void	draw_map(t_map *map)
 		y = 0;
 		while (y < map->mapy)
 		{
-			if (map->play[y][x] == 1)
+			if (map->play[y * map->mapx + x] == 1)
 				draw_square(map, x, y, 0x828282);
 			else
 				draw_square(map, x, y, 0xFFFFFF);
@@ -192,6 +198,7 @@ void	clear_image(t_map *map, int color)
 	y = 0;
 	while (x < WIDTH)
 	{
+		y  = 0;
 		while (y < HEIGHT)
 		{
 			my_pixel_put(&map->buffer, x, y, color);
@@ -201,11 +208,92 @@ void	clear_image(t_map *map, int color)
 	}
 }
 
+void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+
+	dx = abs(x1 - x0);
+	dy = -abs(y1 - y0);
+	sx = (x0 < x1);
+	if (sx == 0)
+		sx = -1;
+	sy = (y0 < y1);
+	if (sy == 0)
+		sy = -1;
+	err = dx + dy;
+	while (1)
+	{
+		my_pixel_put(&map->buffer, x0, y0, color);
+		if (x0 == x1 && y0 == y1)
+			break ;
+		e2 = 2 * err;
+		if (e2 >= dy)
+		{
+			err += dy;
+			x0 += sx;
+		}
+		if (e2 <= dx)
+		{
+			err += dx;
+			y0 += sy;
+		}
+	}
+}
+
+void	draw_ray(t_map *map, t_ray *ray)
+{
+	int x, y;
+
+	// start joueur
+	ray->rx = map->cx;
+	ray->ry = map->cy;
+	ray->ra = map->angle;
+
+	// reset angle
+	if (ray->ra < 0) 
+		ray->ra += 2 * M_PI;
+	if (ray->ra >= 2 * M_PI) 
+		ray->ra -= 2 * M_PI;
+
+	// direction
+	double step = 1; // preci du rayon (px)
+	double dx = cos(ray->ra) * step;
+	double dy = sin(ray->ra) * step;
+
+	// avancer jusqu’a un murrrrr
+	while (1)
+	{
+		ray->rx += dx;
+		ray->ry += dy;
+
+		x = (int)(ray->rx / TILE_SIZE);
+		y = (int)(ray->ry / TILE_SIZE);
+
+		// si hors map -> stop
+		if (x < 0 || x >= map->mapx || y < 0 || y >= map->mapy)
+			break;
+
+		// si mur trouver -> stop
+		if (map->play[y * map->mapx + x] == 1)
+			break;
+	}
+
+	// tracer une ligne depuis joueur 
+	draw_line(map, map->cx, map->cy, (int)ray->rx, (int)ray->ry, 0xDAFF08);
+}
+
+
 int	render_frame(t_map *map)
 {
 	clear_image(map, 0x000000);
 	draw_map(map);
 	draw_player(map);
+	draw_ray(map, map->ray);
 	mlx_put_image_to_window(map->mlx, map->win, map->buffer.img, 0, 0);
 	return (0);
 }
@@ -266,44 +354,25 @@ int	key_release(int keycode, void *param)
 		map->flag_exit = 0;
 	return (refresh(map));
 }
-
-void	draw_ray(t_ray *ray, t_map *map)
+int main(void)
 {
-	// position du player au moment ou je draw_ray
-	ray->map->cx = ray->dx;
-	ray->map->cy = ray->dy;
-	ray->ra = ray->map->angle;
-	// Reset le ra si jamais on est sup a 360 degrer
-	if (ray->ra < 0)
-		ray->ra += 2 * M_PI;
-	if (ray->ra > 2 * M_PI)
-		ray->ra -= 2 * M_PI;
-	ray->dof = 0;
-	// boucle principale qui print
-	while (ray->dof < TILE_SIZE)
-	{
-		if (ray->ra > 0 && ray->ra < M_PI)
-			ray->dy = +TILE_SIZE;
-		else
-			ray->dy = -TILE_SIZE;
-		my_pixel_put(&map->buffer, ray->dx, ray->dy, 0xDAFF08);
-		ray->dof++;
-	}
-}
-int	main(void)
-{
-	t_map	map;
+    t_map map = (t_map){0};    
+    t_ray ray = {0};               
+    map.ray = &ray;               
 
-	map.mlx = mlx_init();
-	if (!map.mlx)
-		return (1);
-	map.buffer.img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
-	map.buffer.addr = mlx_get_data_addr(map.buffer.img, &map.buffer.bpp,
-			&map.buffer.line_length, &map.buffer.endian);
-	map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
-	init_texture(&map);
-	mlx_hook(map.win, 2, 1, key_press, &map);
-	mlx_hook(map.win, 3, 1, key_release, &map);
-	mlx_loop_hook(map.mlx, render_frame, &map);
-	mlx_loop(map.mlx);
+    map.mlx = mlx_init();
+    if (!map.mlx)
+        return (1);
+
+    map.buffer.img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
+    map.buffer.addr = mlx_get_data_addr(map.buffer.img, &map.buffer.bpp,
+                                        &map.buffer.line_length, &map.buffer.endian);
+    map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
+    init_texture(&map);
+
+    mlx_hook(map.win, 2, 1, key_press, &map);
+    mlx_hook(map.win, 3, 1, key_release, &map);
+    mlx_loop_hook(map.mlx, render_frame, &map);
+    mlx_loop(map.mlx);
 }
+

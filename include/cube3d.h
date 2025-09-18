@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/17 16:42:28 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/18 02:04:34 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 #  define TILE_SIZE 100
 # endif
 # ifndef HEIGHT
-#  define HEIGHT 500
+#  define HEIGHT 1000
 # endif
 # ifndef WIDTH
-#  define WIDTH 400
+#  define WIDTH 1000
 # endif
 # ifndef KEY_LEFT
 #  define KEY_LEFT 97
@@ -63,6 +63,22 @@ typedef struct s_tex
 	int		width;
 }			t_tex;
 
+typedef struct s_ray
+{
+	int		r;
+	int		mx;
+	int		my;
+	int		mp;
+	int		dof;
+	float	rx;
+	float	ry;
+	float	ra;
+	float	xo;
+	float	yo;
+	
+	int		delta_x;
+	int		delta_y;
+}			t_ray;
 typedef struct s_map
 {
 	void	*mlx;
@@ -100,24 +116,9 @@ typedef struct s_map
 	int		r;
 	float	move_speed;
 	float	rot_speed;
-	int		play[MAPY][MAPX];
 
+	t_ray	*ray;
+	int		*play;
 }			t_map;
 
-typedef struct s_ray
-{
-	int		r;
-	int		mx;
-	int		my;
-	int		mp;
-	int		dof;
-	float	rx;
-	float	ry;
-	float	ra;
-	float	xo;
-	float	yo;
-	float	dy;
-	float	dx;
-	t_map	*map;
-}			t_ray;
 #endif
