@@ -17,8 +17,8 @@ void	init_texture(t_map *map)
 {
 	map->pos_x = 0;
 	map->pos_y = 0;
-	map->cx = (int)WIDTH / 2;
-	map->cy = (int)HEIGHT / 2;
+	map->cx = 58;
+	map->cy = 58;
 	map->mur.img = mlx_xpm_file_to_image(map->mlx, "player/mur.xpm",
 			&map->mur.width, &map->mur.height);
 	map->mur.addr = mlx_get_data_addr(map->mur.img, &map->mur.bpp,
@@ -50,7 +50,7 @@ void	draw_vector(t_map *map)
 	y = 0;
 	map->dir_x = cos(map->angle);
 	map->dir_y = sin(map->angle);
-	l = 50;
+	l = 15;
 	i = 0;
 	while (i < l)
 	{
@@ -70,7 +70,7 @@ void	draw_player(t_map *map)
 	int	dy;
 
 	y = 0;
-	r = 20;
+	r = 5;
 	dx = 0;
 	dy = 0;
 	x = (map->cx) - r;
@@ -110,16 +110,12 @@ void	draw_square(t_map *map, int x, int y, int color)
 			  dx++;
 		  }
 		  dy++;
-      map->square_printed = 1;
 	  }
   
 }
 
 void	draw_map(t_map *map)
 {
-	int	y;
-	int	x;
-	
 int tmp[441] = {
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -134,7 +130,7 @@ int tmp[441] = {
     1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,
     1,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1,
     1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,
-    1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,
+    1,0,0,0,0,0,1,0,1,1,0,0,1,0,0,0,1,0,0,0,1,
     1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,
     1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,
     1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,
@@ -143,36 +139,60 @@ int tmp[441] = {
     1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 };
-
+  
 	map->mapx = 21;
 	map->mapy = 21;
 	map->play = malloc(sizeof(int) * map->mapx * map->mapy);
 	if (!map->play)
 		exit(1);
 	memcpy(map->play, tmp, sizeof(tmp));
-	x = 0;
-	while (x < map->mapx)
+  map->x = 0;
+	while (map->x < map->mapx)
 	{
-		y = 0;
-		while (y < map->mapy)
+		map->y = 0;
+		while (map->y < map->mapy)
 		{
-			if (map->play[y * map->mapx + x] == 1)
-				draw_square(map, x, y, 0x828282);
-			else
-				draw_square(map, x, y, 0xFFFFFF);
-			y++;
+      if (map->play[map->y * map->mapx + map->x] == 1)
+				draw_square(map, map->x, map->y, 0x828282);
+      else 
+        draw_square(map, map->x, map->y, 0xFFFFFF);
+			map->y++;
 		}
-		x++;
+		map->x++;
 	}
 }
 
+// int ft_check_mur(t_map *map,int pos_x,int pos_y)
+// {
+//   int x = 0;
+//   int y = 0;
+//
+//   while(x < pos_x)
+//   {
+//     y = 0;68 / 140Hours
+//     while( y < pos_y)
+//     {
+//       if(map->play[pos] == 0)
+//       {
+//         printf("Ligne[%d]\n",y);
+//         return(0);
+//       }
+//       y++;
+//     }
+//     x++;
+//   }
+//   return(1);
+// }
+
 void	ft_moove(t_map *map)
 {
+
 	map->move_speed = 2;
 	map->rot_speed = 0.2;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;
-	if (map->flag_w)
+
+  if (map->flag_w)
 	{
 		map->new_pos_x += map->dir_x * map->move_speed;
 		map->new_pos_y += map->dir_y * map->move_speed;
@@ -241,7 +261,7 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 	int	e2;
 	dx = abs(x1 - x0);
 	dy = -abs(y1 - y0);
-	sx = (x0 < x1);
+  sx = (x0 < x1);
 	if (sx == 0)
 		sx = -1;
 	sy = (y0 < y1);
@@ -284,9 +304,7 @@ void	draw_ray(t_map *map, t_ray *ray)
 	// direction
 	double step = 1; // preci du rayon (px)
 	double dx = cos(ray->ra) * step;
-  printf("%lf\n",dx);
 	double dy = sin(ray->ra) * step;
-  printf("%lf\n",dy);
 
 	// avancer jusqu’a un murrrrr
 	while (1)
@@ -305,7 +323,6 @@ void	draw_ray(t_map *map, t_ray *ray)
 		// si mur trouver -> stop
 		if (map->play[y * map->mapx + x] == 1)
     {
-      printf("GG MUR TROUVER BG\n");
 			break;
     }
     
@@ -316,22 +333,29 @@ void	draw_ray(t_map *map, t_ray *ray)
 void ft_draw_all_ray(t_map *map,t_ray *ray)
 {
   int i = 0;
-  double fov;
-  fov = 60 * (M_PI /180);
+  ray ->fov = 60 * (M_PI /180);
   double angle_step;
-  angle_step = fov / (double)WIDTH;
+  angle_step = ray-> fov / (double)WIDTH;
 
   while(i < WIDTH)
   {
-    ray->ra = map->angle - fov / 2 + i * angle_step;
+    ray->ra = map->angle - ray-> fov / 2 + i * angle_step;
     draw_ray(map,ray);
     i++;
   }
 }
 
+// void draw_colonne(t_map *map,t_ray *ray)
+// {
+//   int x = 0;
+//   while( x < HEIGHT)
+//   {
+//     ray->angle = map->angle - (ray->fov/2) + x * (map->fov / HEIGHT)
+//
+// }
+
 int	render_frame(t_map *map)
 {
-	// clear_image(map, 0x000000);
   draw_map(map);
 	draw_player(map);
 	ft_draw_all_ray(map, map->ray);
@@ -411,7 +435,6 @@ int main(void)
                                         &map.buffer.line_length, &map.buffer.endian);
     map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
     init_texture(&map);
-
     mlx_hook(map.win, 2, 1, key_press, &map);
     mlx_hook(map.win, 3, 1, key_release, &map);
     mlx_loop_hook(map.mlx, render_frame, &map);

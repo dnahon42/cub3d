@@ -22,7 +22,7 @@
 # include <string.h>
 # include <unistd.h>
 # ifndef TILE_SIZE
-#  define TILE_SIZE 100
+#  define TILE_SIZE 10
 # endif
 # ifndef HEIGHT
 #  define HEIGHT 1000
@@ -75,7 +75,7 @@ typedef struct s_ray
 	float	ra;
 	float	xo;
 	float	yo;
-	
+  double fov;	
 	int		delta_x;
 	int		delta_y;
 }			t_ray;
@@ -116,7 +116,8 @@ typedef struct s_map
 	int		r;
 	float	move_speed;
 	float	rot_speed;
-
+  int map_x;
+  int map_y;
 	t_ray	*ray;
 	int		*play;
 }			t_map;
