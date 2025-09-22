@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:12:40 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/22 22:31:46 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/22 22:51:33 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,3 +140,4 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 		}
 	}
 }
+

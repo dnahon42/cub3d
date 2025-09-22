@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/22 22:48:51 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:12:12 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int	render_frame(t_map *map)
 	double	angle_step;
 
 	x = 0;
-	clear_image(map, 0x000000);
-	map->ray->fov = 60 * (M_PI / 180);
+	draw_background(map);
+	map->ray->fov = 70 * (M_PI / 180);
 	angle_step = map->ray->fov / (double)WIDTH;
 	while (x < WIDTH)
 	{
 		map->ray->angle_ray = map->angle - (map->ray->fov / 2) + x
 			* (map->ray->fov / WIDTH);
-		get_angle(map, map->ray);
+		get_angle(map, map->ray, map->ray->angle_ray);
 		draw_colonne(map, map->ray, x);
 		x++;
 	}

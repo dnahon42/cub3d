@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/22 22:32:30 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:03:35 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void		draw_player(t_map *map);
 void		draw_square(t_map *map, int x, int y, int color);
 void		draw_map(t_map *map);
 void		draw_line(t_map *map, int x0, int y0, int x1, int y1, int color);
-void		get_angle(t_map *map, t_ray *ray);
+void		get_angle(t_map *map, t_ray *ray, double angle_ray);
 void		ft_draw_all_ray(t_map *map, t_ray *ray);
 void		draw_colonne(t_map *map, t_ray *ray, int x);
 
@@ -148,6 +148,7 @@ void		init_texture(t_map *map);
 void		clear_image(t_map *map, int color);
 void		init_map(t_map *map);
 int			render_frame(t_map *map);
+void		draw_background(t_map *map);
 
 // Mouvement
 void		ft_moove(t_map *map);

@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:25:19 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/22 22:27:37 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:10:42 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_moove(t_map *map)
 {
-	map->move_speed = 0.9;
-	map->rot_speed = 0.2;
+	map->move_speed = 0.5;
+	map->rot_speed = 0.1;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;
 	if (map->flag_w)
@@ -94,7 +94,7 @@ int	key_press(int keycode, void *param)
 
 int	key_release(int keycode, void *param)
 {
-	t_map *map;
+	t_map	*map;
 
 	map = (t_map *)param;
 	if (keycode == KEY_LEFT)
