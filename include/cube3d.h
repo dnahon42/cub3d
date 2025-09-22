@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/18 02:04:34 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/22 22:07:30 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUBE3D_H
 # define MAPX 21
 # define MAPY 21
-#define FOV 1,0472
+# define FOV 60	
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdio.h>
@@ -75,9 +75,18 @@ typedef struct s_ray
 	float	ra;
 	float	xo;
 	float	yo;
-  double fov;	
+	double	fov;
+	float	angle_ray;
 	int		delta_x;
 	int		delta_y;
+	double	impact_x;
+	double	impact_y;
+	float	dist;
+	int		lineHauteur;
+	int		fisheye;
+	int		drawStart;
+	int		drawEnd;
+
 }			t_ray;
 typedef struct s_map
 {
@@ -100,7 +109,6 @@ typedef struct s_map
 	float	pos_x;
 	float	new_pos_y;
 	float	new_pos_x;
-  int square_printed;
 	int		x;
 	int		y;
 	void	*player;
@@ -116,10 +124,14 @@ typedef struct s_map
 	int		r;
 	float	move_speed;
 	float	rot_speed;
-  int map_x;
-  int map_y;
+	int		map_x;
+	int		map_y;
 	t_ray	*ray;
 	int		*play;
 }			t_map;
 
 #endif
+
+//MATHSSSSSSSSSSSSSSSSSS😭😭😭😭😭😭😭😭😭😭😭😭😭
+
+

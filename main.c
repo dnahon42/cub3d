@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 21:09:29 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/18 02:19:02 by kiteixei         ###   ########.fr       */
+/*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
+/*   Updated: 2025/09/22 22:06:39 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/cube3d.h"
-#include "minilibx-linux/mlx.h"
 
 void	init_texture(t_map *map)
 {
@@ -87,7 +86,7 @@ void	draw_player(t_map *map)
 		}
 		x++;
 	}
-	draw_vector(map);
+	// draw_vector(map);
 }
 
 void	draw_square(t_map *map, int x, int y, int color)
@@ -96,103 +95,49 @@ void	draw_square(t_map *map, int x, int y, int color)
 	int	dy;
 
 	// case to pixel
-	  dy = 0;
-	  while (dy < TILE_SIZE)
-	  {
-		  dx = 0;
-		  while (dx < TILE_SIZE)
-		  {
-			  if (dx == 0 || dy == 0)
-				  my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy,
-					  0x000000);
-		  	else
-				  my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE + dy, color);
-			  dx++;
-		  }
-		  dy++;
-	  }
-  
+	dy = 0;
+	while (dy < TILE_SIZE)
+	{
+		dx = 0;
+		while (dx < TILE_SIZE)
+		{
+			if (dx == 0 || dy == 0)
+				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE
+					+ dy, 0x000000);
+			else
+				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE
+					+ dy, color);
+			dx++;
+		}
+		dy++;
+	}
 }
 
 void	draw_map(t_map *map)
 {
-int tmp[441] = {
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,
-    1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,0,1,
-    1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,
-    1,1,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,0,1,1,
-    1,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,1,
-    1,0,1,1,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,
-    1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,1,0,
-    1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,
-    1,0,1,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,1,
-    1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,
-    1,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1,
-    1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,
-    1,0,0,0,0,0,1,0,1,1,0,0,1,0,0,0,1,0,0,0,1,
-    1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,
-    1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,
-    1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,
-    1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
-    1,0,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,
-    1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-};
-  
-	map->mapx = 21;
-	map->mapy = 21;
-	map->play = malloc(sizeof(int) * map->mapx * map->mapy);
-	if (!map->play)
-		exit(1);
-	memcpy(map->play, tmp, sizeof(tmp));
-  map->x = 0;
+	map->x = 0;
 	while (map->x < map->mapx)
 	{
 		map->y = 0;
 		while (map->y < map->mapy)
 		{
-      if (map->play[map->y * map->mapx + map->x] == 1)
+			if (map->play[map->y * map->mapx + map->x] == 1)
 				draw_square(map, map->x, map->y, 0x828282);
-      else 
-        draw_square(map, map->x, map->y, 0xFFFFFF);
+			else
+				draw_square(map, map->x, map->y, 0xFFFFFF);
 			map->y++;
 		}
 		map->x++;
 	}
 }
 
-// int ft_check_mur(t_map *map,int pos_x,int pos_y)
-// {
-//   int x = 0;
-//   int y = 0;
-//
-//   while(x < pos_x)
-//   {
-//     y = 0;68 / 140Hours
-//     while( y < pos_y)
-//     {
-//       if(map->play[pos] == 0)
-//       {
-//         printf("Ligne[%d]\n",y);
-//         return(0);
-//       }
-//       y++;
-//     }
-//     x++;
-//   }
-//   return(1);
-// }
-
 void	ft_moove(t_map *map)
 {
-
-	map->move_speed = 2;
+	map->move_speed = 0.9;
 	map->rot_speed = 0.2;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;
-
-  if (map->flag_w)
+	if (map->flag_w)
 	{
 		map->new_pos_x += map->dir_x * map->move_speed;
 		map->new_pos_y += map->dir_y * map->move_speed;
@@ -241,7 +186,7 @@ void	clear_image(t_map *map, int color)
 	y = 0;
 	while (x < WIDTH)
 	{
-		y  = 0;
+		y = 0;
 		while (y < HEIGHT)
 		{
 			my_pixel_put(&map->buffer, x, y, color);
@@ -259,9 +204,10 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 	int	sy;
 	int	err;
 	int	e2;
+
 	dx = abs(x1 - x0);
 	dy = -abs(y1 - y0);
-  sx = (x0 < x1);
+	sx = (x0 < x1);
 	if (sx == 0)
 		sx = -1;
 	sy = (y0 < y1);
@@ -271,7 +217,7 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 	while (1)
 	{
 		my_pixel_put(&map->buffer, x0, y0, color);
-    if (x0 == x1 && y0 == y1)
+		if (x0 == x1 && y0 == y1)
 			break ;
 		e2 = 2 * err;
 		if (e2 >= dy)
@@ -287,78 +233,134 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-void	draw_ray(t_map *map, t_ray *ray)
+void	get_angle(t_map *map, t_ray *ray)
 {
-	int x, y;
+	double	dx;
+	double	dy;
 
+	int x, y;
 	// start joueur
 	ray->rx = map->cx;
 	ray->ry = map->cy;
-
 	// reset angle
-	if (ray->ra < 0) 
+	if (ray->ra < 0)
 		ray->ra += 2 * M_PI;
-	if (ray->ra >= 2 * M_PI) 
+	if (ray->ra >= 2 * M_PI)
 		ray->ra -= 2 * M_PI;
-
 	// direction
 	double step = 1; // preci du rayon (px)
-	double dx = cos(ray->ra) * step;
-	double dy = sin(ray->ra) * step;
-
+	dx = cos(map->ray->angle_ray) * step;
+	dy = sin(map->ray->angle_ray) * step;
 	// avancer jusqu’a un murrrrr
 	while (1)
 	{
 		ray->rx += dx;
 		ray->ry += dy;
-
-    //pixel to case
+		// pixel to case
 		x = (int)(ray->rx / TILE_SIZE);
 		y = (int)(ray->ry / TILE_SIZE);
-
 		// si hors map -> stop
 		if (x < 0 || x >= map->mapx || y < 0 || y >= map->mapy)
-			break;
-
+			break ;
 		// si mur trouver -> stop
 		if (map->play[y * map->mapx + x] == 1)
-    {
-			break;
-    }
-    
+			break ;
 	}
-    draw_line(map, map->cx, map->cy, (int)ray->rx, (int)ray->ry, 0xDAFF08);
+	ray->impact_x = ray->rx;
+	ray->impact_y = ray->ry;
 }
 
-void ft_draw_all_ray(t_map *map,t_ray *ray)
+void	ft_draw_all_ray(t_map *map, t_ray *ray)
 {
-  int i = 0;
-  ray ->fov = 60 * (M_PI /180);
-  double angle_step;
-  angle_step = ray-> fov / (double)WIDTH;
+	int		i;
+	double	angle_step;
 
-  while(i < WIDTH)
-  {
-    ray->ra = map->angle - ray-> fov / 2 + i * angle_step;
-    draw_ray(map,ray);
-    i++;
-  }
+	i = 0;
+	ray->fov = 60 * (M_PI / 180);
+	angle_step = ray->fov / (double)WIDTH;
+	get_angle(map, map->ray);
+	while (i < WIDTH)
+	{
+		ray->ra = map->angle - ray->fov / 2 + i * angle_step;
+		draw_line(map, map->cx, map->cy, (int)ray->rx, (int)ray->ry, 0xDAFF08);
+		i++;
+	}
 }
 
-// void draw_colonne(t_map *map,t_ray *ray)
-// {
-//   int x = 0;
-//   while( x < HEIGHT)
-//   {
-//     ray->angle = map->angle - (ray->fov/2) + x * (map->fov / HEIGHT)
-//
-// }
+void	init_map(t_map *map)
+{
+	int tmp[441] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0,
+		1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1,
+		0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0,
+		1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0,
+		0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0,
+		0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0,
+		1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0,
+		1, 1, 1, 0, 1, 0, 1, 0, 1,
+					0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0,
+						1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+						1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0,
+						1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1,
+						1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0,
+						1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1,
+						1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0,
+						1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+						0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1,
+						1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+						1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+	map->mapx = 21;
+	map->mapy = 21;
+	map->play = malloc(sizeof(int) * map->mapx * map->mapy);
+	if (!map->play)
+		exit(1);
+	memcpy(map->play, tmp, sizeof(tmp));
+}
+
+void	draw_colonne(t_map *map, t_ray *ray, int x)
+{
+	int	y;
+
+	ray->dist = sqrt((ray->impact_x - map->cx) * (ray->impact_x - map->cx)
+			+ (ray->impact_y - map->cy) * (ray->impact_y - map->cy));
+	ray->fisheye = ray->dist * cos(map->ray->angle_ray - map->angle);
+	ray->lineHauteur = (TILE_SIZE * HEIGHT) / ray->dist;
+	ray->drawStart = HEIGHT / 2 - ray->lineHauteur / 2;
+	ray->drawEnd = HEIGHT / 2 + ray->lineHauteur / 2;
+	if (ray->drawStart < 0)
+		ray->drawStart = 0;
+	if (ray->drawEnd >= HEIGHT)
+		ray->drawEnd = HEIGHT - 1;
+	y = ray->drawStart;
+	while (y <= ray->drawEnd)
+	{
+		my_pixel_put(&map->buffer, x, y, 0xee1400);
+		y++;
+	}
+}
 
 int	render_frame(t_map *map)
 {
-  draw_map(map);
-	draw_player(map);
-	ft_draw_all_ray(map, map->ray);
+	int		x;
+	double	angle_step;
+
+	x = 0;
+	clear_image(map, 0x000000);
+	map->ray->fov = 60 * (M_PI / 180);
+	angle_step = map->ray->fov / (double)WIDTH;
+	while (x < WIDTH)
+	{
+		map->ray->angle_ray = map->angle - (map->ray->fov / 2) + x
+			* (map->ray->fov / WIDTH);
+		get_angle(map, map->ray);
+		draw_colonne(map, map->ray, x);
+		x++;
+	}
+	// draw_map(map);
+	// draw_player(map);
+	// ft_draw_all_ray(map, map->ray);
 	mlx_put_image_to_window(map->mlx, map->win, map->buffer.img, 0, 0);
 	return (0);
 }
@@ -420,24 +422,25 @@ int	key_release(int keycode, void *param)
 	return (refresh(map));
 }
 
-int main(void)
+int	main(void)
 {
-    t_map map = (t_map){0};    
-    t_ray ray = {0};               
-    map.ray = &ray;               
+	t_map	map;
+	t_ray	ray;
 
-    map.mlx = mlx_init();
-    if (!map.mlx)
-        return (1);
-
-    map.buffer.img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
-    map.buffer.addr = mlx_get_data_addr(map.buffer.img, &map.buffer.bpp,
-                                        &map.buffer.line_length, &map.buffer.endian);
-    map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
-    init_texture(&map);
-    mlx_hook(map.win, 2, 1, key_press, &map);
-    mlx_hook(map.win, 3, 1, key_release, &map);
-    mlx_loop_hook(map.mlx, render_frame, &map);
-    mlx_loop(map.mlx);
+	map = (t_map){0};
+	ray = (t_ray){0};
+	map.ray = &ray;
+	map.mlx = mlx_init();
+	if (!map.mlx)
+		return (1);
+	map.buffer.img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
+	map.buffer.addr = mlx_get_data_addr(map.buffer.img, &map.buffer.bpp,
+			&map.buffer.line_length, &map.buffer.endian);
+	map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
+	init_texture(&map);
+	init_map(&map);
+	mlx_hook(map.win, 2, 1, key_press, &map);
+	mlx_hook(map.win, 3, 1, key_release, &map);
+	mlx_loop_hook(map.mlx, render_frame, &map);
+	mlx_loop(map.mlx);
 }
-
