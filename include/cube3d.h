@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/22 22:07:30 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/22 22:32:30 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUBE3D_H
 # define MAPX 21
 # define MAPY 21
-# define FOV 60	
+# define FOV 60
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdio.h>
@@ -95,7 +95,6 @@ typedef struct s_map
 	t_tex	buffer;
 	t_tex	mur;
 	t_tex	sol;
-
 	int		flag_w;
 	int		flag_s;
 	int		flag_a;
@@ -132,6 +131,27 @@ typedef struct s_map
 
 #endif
 
-//MATHSSSSSSSSSSSSSSSSSS😭😭😭😭😭😭😭😭😭😭😭😭😭
+// MATHSSSSSSSSSSSSSSSSSS😭😭😭😭😭😭😭😭😭😭😭😭😭
 
+void		draw_vector(t_map *map);
+void		draw_player(t_map *map);
+void		draw_square(t_map *map, int x, int y, int color);
+void		draw_map(t_map *map);
+void		draw_line(t_map *map, int x0, int y0, int x1, int y1, int color);
+void		get_angle(t_map *map, t_ray *ray);
+void		ft_draw_all_ray(t_map *map, t_ray *ray);
+void		draw_colonne(t_map *map, t_ray *ray, int x);
 
+// Graphisme
+void		my_pixel_put(t_tex *img, int x, int y, int color);
+void		init_texture(t_map *map);
+void		clear_image(t_map *map, int color);
+void		init_map(t_map *map);
+int			render_frame(t_map *map);
+
+// Mouvement
+void		ft_moove(t_map *map);
+void		init_flag(t_map *map);
+int			refresh(void *param);
+int			key_press(int keycode, void *param);
+int			key_release(int keycode, void *param);
