@@ -8,8 +8,13 @@ LDFLAGS		= 	-lreadline -Llibft -lft
 AR 			= 	ar rcs
 RM 			= 	rm -f
 
-SRC_DIR 	= 	./src
-SRC 		= main.c	
+
+MLX_DIR     = ./minilibx-linux
+MLX_FLAGS   = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+
+LDFLAGS     = -Llibft -lft $(MLX_FLAGS)
+SRC_DIR 	=   ./src
+SRC 			=   main.c	
 LIBFT 		= 	./libft/libft.a
 INCLUDES	= 	./includes/cub3d.h ./libft/includes/libft.h
 
@@ -29,6 +34,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(MAKE) -C libft --no-print-directory
+	@$(MAKE) -C $(MLX_DIR) --no-print-directory
 	@echo "$(GREEN)Building $(NC)$(NAME)"
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 
@@ -37,15 +43,18 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(MAKE) -C libft clean --no-print-directory
-	@echo "$(CYAN)Cleaning object files"
-	@$(RM) $(OBJ) $(OBJ_B) libft.a
+	@echo "$(RED)🧹 Suppression des fichiers objets...$(RESET)"
+	@$(RM) $(OBJ)
+	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -C $(LIBFT) clean
+	@$(MAKE) -C $(PRINTF_DIR) clean
+	@$(MAKE) -C $(GNL_DIR) clean
 
 fclean: clean
-	@$(MAKE) -C libft fclean --no-print-directory
-	@echo "$(CYAN)Cleaning $(NC)$(NAME)"
+	@echo "$(RED)💣 Suppression de l'exécutable...$(RESET)"
 	@$(RM) $(NAME)
-
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(PRINTF_DIR) fclean
 re: fclean all
 
 debug: $(OBJ)
@@ -54,7 +63,7 @@ debug: $(OBJ)
 	@$(CC) $(DEBUGFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 
 valgrind: $(NAME)
-	@echo "$(YELLOW)🔍 Lancement de Valgrind sur ./cub3d..."
+	@echo "$(YELLOW)🔍 Lancement de Valgrind sur ./minishell..."
 	valgrind -q --suppressions=./ignore --trace-children=yes \
 		--leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes \
 		./main
