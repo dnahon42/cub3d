@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:12:40 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/22 22:51:33 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:38:29 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	draw_vector(t_map *map)
 	{
 		x = map->cx + i * map->dir_x;
 		y = map->cy + i * map->dir_y;
-		my_pixel_put(&map->buffer, x, y, 0x0000FF);
+		my_pixel_put(&map->buffer[0], x, y, 0x0000FF);
 		i++;
 	}
 }
@@ -55,7 +55,7 @@ void	draw_player(t_map *map)
 			dx = x - map->cx;
 			dy = y - map->cy;
 			if (dx * dx + dy * dy <= r * r)
-				my_pixel_put(&map->buffer, x, y, 0xFF0000);
+				my_pixel_put(&map->buffer[map->current], x, y, 0xFF0000);
 			y++;
 		}
 		x++;
@@ -75,10 +75,10 @@ void	draw_square(t_map *map, int x, int y, int color)
 		while (dx < TILE_SIZE)
 		{
 			if (dx == 0 || dy == 0)
-				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE
+				my_pixel_put(&map->buffer[map->current], x * TILE_SIZE + dx, y * TILE_SIZE
 					+ dy, 0x000000);
 			else
-				my_pixel_put(&map->buffer, x * TILE_SIZE + dx, y * TILE_SIZE
+				my_pixel_put(&map->buffer[map->current], x * TILE_SIZE + dx, y * TILE_SIZE
 					+ dy, color);
 			dx++;
 		}
@@ -124,7 +124,7 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 	err = dx + dy;
 	while (1)
 	{
-		my_pixel_put(&map->buffer, x0, y0, color);
+		my_pixel_put(&map->buffer[map->current], x0, y0, color);
 		if (x0 == x1 && y0 == y1)
 			break ;
 		e2 = 2 * err;
@@ -140,4 +140,3 @@ void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 		}
 	}
 }
-

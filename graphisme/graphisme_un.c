@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:21:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/23 00:03:13 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:32:05 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	draw_background(t_map *map)
 		x = 0;
 		while (x < WIDTH)
 		{
-			dst = map->buffer.addr + (y * map->buffer.line_length + x
-					* (map->buffer.bpp / 8));
+			dst = map->buffer[map->current].addr + (y * map->buffer[map->current].line_length + x
+					* (map->buffer[map->current].bpp / 8));
 			if (y < HEIGHT / 2)
 				*(unsigned int *)dst = 0x87CEEB; // ciel (bleu clair)
 			else

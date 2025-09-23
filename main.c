@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/23 00:12:12 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:08:40 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ int	render_frame(t_map *map)
 {
 	int		x;
 	double	angle_step;
+	t_tex	*buf;
 
+	
+	buf = &map->buffer[map->current];
 	x = 0;
 	draw_background(map);
-	map->ray->fov = 70 * (M_PI / 180);
+	map->ray->fov = 60 * (M_PI / 180);
 	angle_step = map->ray->fov / (double)WIDTH;
 	while (x < WIDTH)
 	{
@@ -32,7 +35,9 @@ int	render_frame(t_map *map)
 	draw_map(map);
 	draw_player(map);
 	ft_draw_all_ray(map, map->ray);
-	mlx_put_image_to_window(map->mlx, map->win, map->buffer.img, 0, 0);
+	mlx_put_image_to_window(map->mlx, map->win, map->buffer[map->current].img,
+		0, 0);
+	map->current = (map->current + 1) % 2;
 	return (0);
 }
 
@@ -47,9 +52,15 @@ int	main(void)
 	map.mlx = mlx_init();
 	if (!map.mlx)
 		return (1);
-	map.buffer.img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
-	map.buffer.addr = mlx_get_data_addr(map.buffer.img, &map.buffer.bpp,
-			&map.buffer.line_length, &map.buffer.endian);
+	map.buffer[0].img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
+	map.buffer[0].addr = mlx_get_data_addr(map.buffer[0].img,
+			&map.buffer[0].bpp, &map.buffer[0].line_length,
+			&map.buffer[0].endian);
+	map.buffer[1].img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
+	map.buffer[1].addr = mlx_get_data_addr(map.buffer[1].img,
+			&map.buffer[1].bpp, &map.buffer[1].line_length,
+			&map.buffer[1].endian);
+	map.current = 0;
 	map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
 	init_texture(&map);
 	init_map(&map);

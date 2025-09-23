@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:17:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/23 00:07:32 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:42:01 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ void	ft_draw_all_ray(t_map *map, t_ray *ray)
 
 void	draw_colonne(t_map *map, t_ray *ray, int x)
 {
-	int	y;
+	int		y;
+	double	dist_corrected;
 
+	dist_corrected = ray->dist * cos(map->ray->angle_ray - map->angle);
+	ray->lineHauteur = (TILE_SIZE * HEIGHT) / dist_corrected;
 	ray->dist = sqrt((ray->impact_x - map->cx) * (ray->impact_x - map->cx)
 			+ (ray->impact_y - map->cy) * (ray->impact_y - map->cy));
-	ray->fisheye = ray->dist * cos(map->ray->angle_ray - map->angle);
-	ray->lineHauteur = (TILE_SIZE * HEIGHT) / ray->dist;
+	ray->lineHauteur = (TILE_SIZE * HEIGHT) / dist_corrected;
 	ray->drawStart = HEIGHT / 2 - ray->lineHauteur / 2;
 	ray->drawEnd = HEIGHT / 2 + ray->lineHauteur / 2;
 	if (ray->drawStart < 0)
@@ -74,7 +76,7 @@ void	draw_colonne(t_map *map, t_ray *ray, int x)
 	y = ray->drawStart;
 	while (y <= ray->drawEnd)
 	{
-		my_pixel_put(&map->buffer, x, y, 0xee1400);
+		my_pixel_put(&map->buffer[map->current], x, y, 0xee1400);
 		y++;
 	}
 }

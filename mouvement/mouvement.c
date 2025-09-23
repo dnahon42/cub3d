@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:25:19 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/23 00:10:42 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:05:18 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_moove(t_map *map)
 {
 	map->move_speed = 0.5;
-	map->rot_speed = 0.1;
+	map->rot_speed = 0.25;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;
 	if (map->flag_w)
@@ -44,6 +44,10 @@ void	ft_moove(t_map *map)
 		map->angle += map->rot_speed;
 	map->dir_x = cos(map->angle);
 	map->dir_y = sin(map->angle);
+	if (map->angle < 0)
+		map->angle += 2 * M_PI;
+	if (map->angle >= 2 * M_PI)
+		map->angle -= 2 * M_PI;
 	map->cx = map->new_pos_x;
 	map->cy = map->new_pos_y;
 }
