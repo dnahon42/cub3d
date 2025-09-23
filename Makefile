@@ -1,71 +1,69 @@
+NAME        = cub3d
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror -g3 -O0
+DEBUGFLAGS  = -Wall -Wextra -Werror -g3 -O0 -fsanitize=address -fsanitize=undefined -fsanitize=leak
 
-NAME 		= 	cub3d
-CC 			= 	cc
-CFLAGS 		= 	-g3 -O0 -Wall -Wextra -Werror
-DEBUGFLAGS	= 	-g3 -O0 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined -fsanitize=leak
+RM          = rm -f
+AR          = ar rcs
 
-LDFLAGS		= 	-lreadline -Llibft -lft
-AR 			= 	ar rcs
-RM 			= 	rm -f
-
+# --- Libs ---
+LIBFT_DIR   = ./libft
+LIBFT       = $(LIBFT_DIR)/libft.a
 
 MLX_DIR     = ./minilibx-linux
 MLX_FLAGS   = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
-LDFLAGS     = -Llibft -lft $(MLX_FLAGS)
-SRC_DIR 	=   ./src
-SRC 			=   main.c	
-LIBFT 		= 	./libft/libft.a
-INCLUDES	= 	./includes/cub3d.h ./libft/includes/libft.h
+LDFLAGS     = -L$(LIBFT_DIR) -lft $(MLX_FLAGS)
 
-OBJ 		= 	$(SRC:.c=.o)
-OBJ_B 		= 	$(SRC_B:.c=.o)
+# --- Includes ---
+INC_DIR     = ./include
+INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
-# Color codes
-GREEN 		= 	\033[0;32m
-YELLOW 		= 	\033[0;33m
-RED 		= 	\033[0;31m
-BLUE 		= 	\033[0;34m
-PURPLE 		= 	\033[0;35m
-CYAN 		= 	\033[0;36m
-NC 			= 	\033[0m # No Color
+# --- Sources (liste manuelle) ---
+SRC = \
+	main.c \
+	maths/maths_map_un.c \
+	maths/maths_map_deux.c \
+	mouvement/mouvement.c \
+	graphisme/graphisme_un.c \
 
+OBJ = $(SRC:.c=.o)
+
+# --- Colors ---
+GREEN   = \033[0;32m
+YELLOW  = \033[0;33m
+RED     = \033[0;31m
+CYAN    = \033[0;36m
+NC      = \033[0m
+
+# --- Rules ---
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(MAKE) -C libft --no-print-directory
+	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 	@$(MAKE) -C $(MLX_DIR) --no-print-directory
-	@echo "$(GREEN)Building $(NC)$(NAME)"
+	@echo "$(GREEN)🔨 Linking $(NAME)$(NC)"
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 
-%.o: %.c $(INCLUDES)
-	@echo "$(CYAN)Compiling $(NC)$<"
-	@$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.c
+	@echo "$(CYAN)⚙️  Compiling $(NC)$<"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@echo "$(RED)🧹 Suppression des fichiers objets...$(RESET)"
+	@echo "$(RED)🧹 Suppression des fichiers objets...$(NC)"
 	@$(RM) $(OBJ)
+	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(MLX_DIR) clean
-	@$(MAKE) -C $(LIBFT) clean
-	@$(MAKE) -C $(PRINTF_DIR) clean
-	@$(MAKE) -C $(GNL_DIR) clean
 
 fclean: clean
-	@echo "$(RED)💣 Suppression de l'exécutable...$(RESET)"
+	@echo "$(RED)💣 Suppression de l'exécutable...$(NC)"
 	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@$(MAKE) -C $(PRINTF_DIR) fclean
+
 re: fclean all
 
 debug: $(OBJ)
-	@$(MAKE) -C libft --no-print-directory
-	@echo "$(YELLOW)Building $(NC)$(NAME) $(YELLOW)with debug flags"
+	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
+	@$(MAKE) -C $(MLX_DIR) --no-print-directory
+	@echo "$(YELLOW)🔍 Building $(NAME) with debug flags$(NC)"
 	@$(CC) $(DEBUGFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
-
-valgrind: $(NAME)
-	@echo "$(YELLOW)🔍 Lancement de Valgrind sur ./minishell..."
-	valgrind -q --suppressions=./ignore --trace-children=yes \
-		--leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes \
-		./main
-
-.PHONY: all clean fclean re debug valgrind

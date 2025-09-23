@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/22 22:07:30 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:39:46 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUBE3D_H
 # define MAPX 21
 # define MAPY 21
-# define FOV 60	
+# define FOV 60
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdio.h>
@@ -25,10 +25,10 @@
 #  define TILE_SIZE 10
 # endif
 # ifndef HEIGHT
-#  define HEIGHT 1000
+#  define HEIGHT 640
 # endif
 # ifndef WIDTH
-#  define WIDTH 1000
+#  define WIDTH 1920
 # endif
 # ifndef KEY_LEFT
 #  define KEY_LEFT 97
@@ -52,6 +52,7 @@
 #  define KEY_ROT_RIGHT 65363
 # endif
 
+// MLXXXXXXXXXXXXXXXXX
 typedef struct s_tex
 {
 	void	*img;
@@ -63,39 +64,35 @@ typedef struct s_tex
 	int		width;
 }			t_tex;
 
+// MATHSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 typedef struct s_ray
 {
-	int		r;
-	int		mx;
-	int		my;
-	int		mp;
-	int		dof;
 	float	rx;
 	float	ry;
-	float	ra;
-	float	xo;
-	float	yo;
 	double	fov;
-	float	angle_ray;
-	int		delta_x;
-	int		delta_y;
+	double	angle_ray;
 	double	impact_x;
 	double	impact_y;
 	float	dist;
 	int		lineHauteur;
-	int		fisheye;
+	float	fisheye;
 	int		drawStart;
 	int		drawEnd;
 
 }			t_ray;
+
+// Mother Struct
 typedef struct s_map
 {
+	// MLX
 	void	*mlx;
 	void	*win;
-	t_tex	buffer;
+
+	int		current;
 	t_tex	mur;
 	t_tex	sol;
 
+	// Keyboard
 	int		flag_w;
 	int		flag_s;
 	int		flag_a;
@@ -103,6 +100,10 @@ typedef struct s_map
 	int		flag_exit;
 	int		flag_right;
 	int		flag_left;
+	float	move_speed;
+	float	rot_speed;
+
+	// Maths
 	int		img_height;
 	int		img_width;
 	float	pos_y;
@@ -111,9 +112,8 @@ typedef struct s_map
 	float	new_pos_x;
 	int		x;
 	int		y;
-	void	*player;
-	void	*droite;
-	int		flag_col;
+
+	// Map
 	int		mapx;
 	int		mapy;
 	double	dir_x;
@@ -121,17 +121,33 @@ typedef struct s_map
 	float	angle;
 	float	cx;
 	float	cy;
-	int		r;
-	float	move_speed;
-	float	rot_speed;
-	int		map_x;
-	int		map_y;
-	t_ray	*ray;
 	int		*play;
+	t_ray	*ray;
+	t_tex	buffer[2];
 }			t_map;
-
 #endif
 
-//MATHSSSSSSSSSSSSSSSSSS😭😭😭😭😭😭😭😭😭😭😭😭😭
+// MATHSSSSSSSSSSSSSSSSSS😭
+void		draw_vector(t_map *map);
+void		draw_player(t_map *map);
+void		draw_square(t_map *map, int x, int y, int color);
+void		draw_map(t_map *map);
+void		draw_line(t_map *map, int x0, int y0, int x1, int y1, int color);
+void		get_angle(t_map *map, t_ray *ray, double angle_ray);
+void		ft_draw_all_ray(t_map *map, t_ray *ray);
+void		draw_colonne(t_map *map, t_ray *ray, int x);
 
+// Graphisme
+void		my_pixel_put(t_tex *img, int x, int y, int color);
+void		init_texture(t_map *map);
+void		clear_image(t_map *map, int color);
+void		init_map(t_map *map);
+int			render_frame(t_map *map);
+void		draw_background(t_map *map);
 
+// Mouvement
+void		ft_moove(t_map *map);
+void		init_flag(t_map *map);
+int			refresh(void *param);
+int			key_press(int keycode, void *param);
+int			key_release(int keycode, void *param);
