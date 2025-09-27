@@ -21,12 +21,25 @@ INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
 # --- Sources (liste manuelle) ---
 SRC = \
-	main.c \
-	maths/maths_map_un.c \
-	maths/maths_map_deux.c \
-	mouvement/mouvement.c \
-	graphisme/graphisme_un.c \
-	graphisme/graphisme_deux.c \
+	./srcs/main.c \
+	./srcs/free.c \
+	./srcs/maths/maths_map_un.c \
+	./srcs/maths/maths_map_deux.c \
+	./srcs/maths/maths_map_trois.c \
+	./srcs/mouvement/mouvement.c \
+	./srcs/mouvement/mouvement_utils.c \
+	./srcs/graphisme/graphisme_un.c \
+	./srcs/graphisme/graphisme_deux.c \
+	./srcs/parsing/parsing.c \
+	./srcs/parsing/check_borders.c \
+	./srcs/parsing/check_map_elements.c \
+	./srcs/parsing/set_colors.c \
+	./srcs/parsing/set_map.c \
+	./srcs/parsing/set_map2.c \
+	./srcs/parsing/set_textures.c \
+	./srcs/parsing/utils.c \
+	./srcs/parsing/verify_textures_and_colors.c \
+
 
 OBJ = $(SRC:.c=.o)
 

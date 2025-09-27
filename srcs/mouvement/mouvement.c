@@ -3,56 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   mouvement.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:25:19 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/27 05:21:48 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/27 21:40:18 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cube3d.h"
+#include "../../includes/cub3d.h"
 
-void	ft_moove(t_map *map)
+static void	ft_moove(t_map *map)
 {
-	map->move_speed = 0.30;
+	map->move_speed = 0.3 * TILE_SIZE;
 	map->rot_speed = 0.25;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;
 	if (map->flag_w)
-	{
-		map->new_pos_x += map->dir_x * map->move_speed;
-		map->new_pos_y += map->dir_y * map->move_speed;
-	}
+		move_forward(map);
 	if (map->flag_s)
-	{
-		map->new_pos_x -= map->dir_x * map->move_speed;
-		map->new_pos_y -= map->dir_y * map->move_speed;
-	}
+		move_backward(map);
 	if (map->flag_a)
-	{
-		map->new_pos_x -= map->dir_y * map->move_speed;
-		map->new_pos_y += map->dir_x * map->move_speed;
-	}
+		move_left(map);
 	if (map->flag_d)
-	{
-		map->new_pos_x += map->dir_y * map->move_speed;
-		map->new_pos_y -= map->dir_x * map->move_speed;
-	}
-	if (map->flag_left)
-		map->angle -= map->rot_speed;
-	if (map->flag_right)
-		map->angle += map->rot_speed;
-	map->dir_x = cos(map->angle);
-	map->dir_y = sin(map->angle);
-	if (map->angle < 0)
-		map->angle += 2 * M_PI;
-	if (map->angle >= 2 * M_PI)
-		map->angle -= 2 * M_PI;
+		move_right(map);
+	rotate_player(map);
 	map->cx = map->new_pos_x;
 	map->cy = map->new_pos_y;
 }
 
-void	init_flag(t_map *map)
+static void	init_flag(t_map *map)
 {
 	map->flag_w = 0;
 	map->flag_s = 0;
@@ -61,7 +40,8 @@ void	init_flag(t_map *map)
 	map->flag_right = 0;
 	map->flag_left = 0;
 }
-int	refresh(void *param)
+
+static int	refresh(void *param)
 {
 	t_map	*map;
 
@@ -92,7 +72,7 @@ int	key_press(int keycode, void *param)
 	else if (keycode == KEY_ROT_LEFT)
 		map->flag_left = 1;
 	else if (keycode == KEY_EXIT)
-		exit(1);
+		exit_safe(map);
 	return (refresh(map));
 }
 
