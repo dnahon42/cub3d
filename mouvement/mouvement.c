@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:25:19 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/23 22:05:18 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/27 05:21:48 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_moove(t_map *map)
 {
-	map->move_speed = 0.5;
+	map->move_speed = 0.30;
 	map->rot_speed = 0.25;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;

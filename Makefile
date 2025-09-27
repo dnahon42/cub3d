@@ -26,6 +26,7 @@ SRC = \
 	maths/maths_map_deux.c \
 	mouvement/mouvement.c \
 	graphisme/graphisme_un.c \
+	graphisme/graphisme_deux.c \
 
 OBJ = $(SRC:.c=.o)
 
