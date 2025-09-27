@@ -6,13 +6,18 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:56:25 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/13 22:44:56 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/14 21:54:51 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../libft/includes/get_next_line.h"
 #include "../../libft/includes/libft.h"
+
+static unsigned long	rgb_to_hex(int *rgb)
+{
+	return (((rgb[0] & 0xff) << 16) + ((rgb[1] & 0xff) << 8) + (rgb[2] & 0xff));
+}
 
 int	set_floor_color(t_data *data, char *line)
 {
@@ -40,7 +45,7 @@ int	set_floor_color(t_data *data, char *line)
 		while (line[i] && (line[i] == ',' || ft_isspace(line[i])))
 			i++;
 	}
-	return (0);
+	return (data->floor_hex = rgb_to_hex(data->floor_color), 0);
 }
 
 int	set_ceiling_color(t_data *data, char *line)
@@ -69,6 +74,24 @@ int	set_ceiling_color(t_data *data, char *line)
 		while (line[i] && (line[i] == ',' || ft_isspace(line[i])))
 			i++;
 	}
+	return (data->ceiling_hex = rgb_to_hex(data->ceiling_color), 0);
+}
+
+int	is_polluted(char *line)
+{
+	int (commas), (has_letters), (i) = first_char_index(line, 1);
+	commas = 0;
+	has_letters = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			commas++;
+		if (ft_isalpha(line[i]))
+			has_letters = 1;
+		i++;
+	}
+	if (commas >= 3 || has_letters)
+		return (1);
 	return (0);
 }
 
@@ -78,11 +101,15 @@ int	set_colors(t_data *data, char *line)
 		return (1);
 	if (line[0] == 'F' && !(data->floor_color))
 	{
+		if (is_polluted(line))
+			return (1);
 		if (set_floor_color(data, line))
 			return (1);
 	}
 	else if (line[0] == 'C' && !(data->ceiling_color))
 	{
+		if (is_polluted(line))
+			return (1);
 		if (set_ceiling_color(data, line))
 			return (1);
 	}

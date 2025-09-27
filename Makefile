@@ -1,8 +1,6 @@
-
 NAME 		= 	cub3d
 CC 			= 	cc
 CFLAGS 		= 	-g3 -O0 -Wall -Wextra -Werror
-DEBUGFLAGS	= 	-g3 -O0 -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined -fsanitize=leak
 
 LDFLAGS		= 	-lreadline -Llibft -lft
 AR 			= 	ar rcs
@@ -12,7 +10,7 @@ SRC_DIR 	= 	./srcs
 SRC 		= 	./srcs/main.c ./srcs/parsing/set_colors.c ./srcs/parsing/set_map.c \
 				./srcs/parsing/set_textures.c ./srcs/parsing/utils.c \
 				./srcs/parsing/verify_textures_and_colors.c ./srcs/parsing/check_borders.c \
-				./srcs/parsing/check_map_elements.c \
+				./srcs/parsing/check_map_elements.c ./srcs/parsing/set_map2.c\
 				
 LIBFT 		= 	./libft/libft.a
 INCLUDES	= 	./includes/cub3d.h ./libft/includes/libft.h
@@ -52,10 +50,6 @@ fclean: clean
 
 re: fclean all
 
-debug: $(OBJ)
-	@$(MAKE) -C libft --no-print-directory
-	@echo "$(YELLOW)Building $(NC)$(NAME) $(YELLOW)with debug flags"
-	@$(CC) $(DEBUGFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 
 valgrind: $(NAME)
 	@echo "$(YELLOW)🔍 Lancement de Valgrind sur ./cub3d..."

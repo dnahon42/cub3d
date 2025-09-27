@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 21:32:01 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/13 22:45:01 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/14 20:23:16 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 
 int	check_map_elements(t_data *data)
 {
-	int (x), (x_max), (found), (y) = data->map_start;
+	int (x), (x_max), (is_invalid), (found), (y) = data->map_start;
 	found = 0;
+	is_invalid = 0;
 	while (data->map[y])
 	{
 		x = 0;
@@ -27,11 +28,16 @@ int	check_map_elements(t_data *data)
 			if (data->map[y][x] == 'E' || data->map[y][x] == 'W'
 				|| data->map[y][x] == 'S' || data->map[y][x] == 'N')
 				found++;
+			if (data->map[y][x] != 'E' && data->map[y][x] != 'W'
+				&& data->map[y][x] != 'S' && data->map[y][x] != 'N'
+				&& data->map[y][x] != '1' && data->map[y][x] != ' '
+				&& data->map[y][x] != '0')
+				is_invalid = 1;
 			x++;
 		}
 		y++;
 	}
-	if (found == 0 || found > 1)
+	if (found == 0 || found > 1 || is_invalid)
 		return (1);
 	return (0);
 }
