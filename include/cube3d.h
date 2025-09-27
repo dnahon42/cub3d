@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/27 05:19:15 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/27 07:48:59 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,10 +171,14 @@ void		draw_player(t_map *map);
 void		draw_square(t_map *map, int x, int y, int color);
 void		draw_map(t_map *map);
 void		draw_line(t_map *map, int x0, int y0, int x1, int y1, int color);
-void		get_dda(t_map *map, t_ray *ray, double angle_ray);
+void		get_dda(t_map *map, t_ray *ray);
 void		ft_draw_all_ray(t_map *map, t_ray *ray);
 void		draw_colonne(t_map *map, t_ray *ray, int x);
 void		check_value(t_map *map, double wall_x, int x);
+void		init_dda(t_map *map, double angle_ray);
+void		get_dda_one(t_map *map);
+void		get_dda_two(t_map *map, t_ray *ray);
+void		get_dda_three(t_map *map, t_ray *ray);
 
 // Graphisme
 void		my_pixel_put(t_tex *img, int x, int y, int color);

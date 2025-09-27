@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:17:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/27 05:26:57 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/27 07:47:55 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	ft_draw_all_ray(t_map *map, t_ray *ray)
 	while (i < WIDTH)
 	{
 		angle_ray = map->angle - ray->fov / 2 + i * angle_step;
-		get_dda(map, ray, angle_ray);
+		init_dda(map, angle_ray);
 		draw_line(map, map->cx, map->cy, (int)ray->impact_x, (int)ray->impact_y,
-			0xDAFF08);
+			0x00000);
 		i++;
 	}
 }
@@ -36,22 +36,16 @@ void	draw_colonne(t_map *map, t_ray *ray, int x)
 	double	dist;
 	double	dist_corrected;
 
-	// distance brute entre joueur et point d'impact
 	dist = sqrt((ray->impact_x - map->cx) * (ray->impact_x - map->cx)
 			+ (ray->impact_y - map->cy) * (ray->impact_y - map->cy));
-	// correction du fish-eye
 	dist_corrected = dist * cos(ray->angle_ray - map->angle);
-	// hauteur de la colonne proportionnelle à la distance corrigée
 	ray->lineHauteur = (TILE_SIZE * HEIGHT) / dist_corrected;
-	// position de début et fin sur l’ecran
 	ray->drawStart = HEIGHT / 2 - ray->lineHauteur / 2;
 	ray->drawEnd = HEIGHT / 2 + ray->lineHauteur / 2;
-	// C ne pas dépasser l’écran
 	if (ray->drawStart < 0)
 		ray->drawStart = 0;
 	if (ray->drawEnd >= HEIGHT)
 		ray->drawEnd = HEIGHT - 1;
-	// Dessin de la colonne en rouge
 	y = ray->drawStart;
 	while (y <= ray->drawEnd)
 	{
@@ -59,18 +53,29 @@ void	draw_colonne(t_map *map, t_ray *ray, int x)
 		y++;
 	}
 }
-void	get_dda(t_map *map, t_ray *ray, double angle_ray)
+
+// ici j'init mes valeurs pour cela je transforme mon angle_ray en vecteur en x et y il est determiner par l'angle initial de mon joueur
+// je les stock car je vais en avoir besoin pour savoir dans quel sens je touche le mur
+// je convertis aussi la postion de joueur en pixel donc si tu effectues le calcul tu tombera sur la position initial du joueur
+// je calcule la difference  entre verticale a la suivante
+void	init_dda(t_map *map, double angle_ray)
 {
 	map->dda->hit = 0;
 	map->dda->ray_dir_x = cos(angle_ray);
 	map->dda->ray_dir_y = sin(angle_ray);
 	map->ray->dir_x = map->dda->ray_dir_x;
 	map->ray->dir_y = map->dda->ray_dir_y;
-	ray->angle_ray = angle_ray;
+	map->ray->angle_ray = angle_ray;
 	map->dda->map_x = (int)(map->cx / TILE_SIZE);
 	map->dda->map_y = (int)(map->cy / TILE_SIZE);
 	map->dda->delta_dist_x = fabs(1 / map->dda->ray_dir_x);
 	map->dda->delta_dist_y = fabs(1 / map->dda->ray_dir_y);
+	get_dda_one(map);
+}
+
+// ici je cherche le sens de mon rayon je calcule ensuite la distance jusqau premier mur vertical et horizontale
+void	get_dda_one(t_map *map)
+{
 	if (map->dda->ray_dir_x < 0)
 	{
 		map->dda->step_x = -1;
@@ -95,6 +100,11 @@ void	get_dda(t_map *map, t_ray *ray, double angle_ray)
 		map->dda->side_dist_y = (map->dda->map_y + 1.0 - map->cy / TILE_SIZE)
 			* map->dda->delta_dist_y;
 	}
+	get_dda_two(map, map->ray);
+}
+
+void	get_dda_two(t_map *map, t_ray *ray)
+{
 	while (map->dda->hit == 0)
 	{
 		if (map->dda->side_dist_x < map->dda->side_dist_y)
@@ -115,6 +125,11 @@ void	get_dda(t_map *map, t_ray *ray, double angle_ray)
 		if (map->play[map->dda->map_y * map->mapx + map->dda->map_x] == 1)
 			map->dda->hit = 1;
 	}
+	get_dda_three(map, map->ray);
+}
+
+void	get_dda_three(t_map *map, t_ray *ray)
+{
 	if (ray->side == 0)
 	{
 		ray->impact_x = map->cx + (map->dda->side_dist_x
@@ -131,6 +146,7 @@ void	get_dda(t_map *map, t_ray *ray, double angle_ray)
 	}
 	ray->texture = choose_texture(map, ray);
 }
+
 void	draw_texture_one(t_map *map, int x)
 {
 	double	wall_x;

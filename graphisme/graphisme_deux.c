@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 04:16:03 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/27 05:23:55 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/27 07:50:35 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_pixel_from_texture_safe(t_tex *tex, int x, int y)
 	if (x < 0 || x >= tex->width || y < 0 || y >= tex->height)
 		return (0x00FF00); // debug vert
 	dst = tex->addr + (y * tex->line_length + x * (tex->bpp / 8));
-	color = *(unsigned int *)dst; 
+	color = *(unsigned int *)dst;
 	return (color);
 }
 void	my_pixel_put(t_tex *img, int x, int y, int color)
