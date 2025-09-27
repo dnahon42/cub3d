@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/23 22:08:40 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/27 05:34:47 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,17 @@ int	render_frame(t_map *map)
 	double	angle_step;
 	t_tex	*buf;
 
-	
 	buf = &map->buffer[map->current];
-	x = 0;
 	draw_background(map);
 	map->ray->fov = 60 * (M_PI / 180);
 	angle_step = map->ray->fov / (double)WIDTH;
+	x = 0;
 	while (x < WIDTH)
 	{
-		map->ray->angle_ray = map->angle - (map->ray->fov / 2) + x
-			* (map->ray->fov / WIDTH);
-		get_angle(map, map->ray, map->ray->angle_ray);
+		map->ray->angle_ray = map->angle - (map->ray->fov / 2) + x * angle_step;
+		get_dda(map, map->ray, map->ray->angle_ray);
 		draw_colonne(map, map->ray, x);
+		// draw_texture_one(map, x);
 		x++;
 	}
 	draw_map(map);
@@ -45,9 +44,12 @@ int	main(void)
 {
 	t_map	map;
 	t_ray	ray;
+	t_dda	dda;
 
 	map = (t_map){0};
+	dda = (t_dda){0};
 	ray = (t_ray){0};
+	map.dda = &dda;
 	map.ray = &ray;
 	map.mlx = mlx_init();
 	if (!map.mlx)
