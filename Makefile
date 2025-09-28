@@ -39,6 +39,8 @@ SRC = \
 	./srcs/parsing/set_textures.c \
 	./srcs/parsing/utils.c \
 	./srcs/parsing/verify_textures_and_colors.c \
+	./srcs/parsing/error_texture.c \
+
 
 
 OBJ = $(SRC:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_colors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:56:25 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/27 21:42:42 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:57:55 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static unsigned long	rgb_to_hex(int *rgb)
 
 static int	set_floor_color(t_data *data, char *line)
 {
-	int (start), (i), (j), (color_idx) = 0;
+	int(start), (i), (j), (color_idx) = 0;
 	data->floor_color = ft_malloc(sizeof(int) * 3);
 	if (!data->floor_color)
 		return (1);
@@ -50,7 +50,7 @@ static int	set_floor_color(t_data *data, char *line)
 
 static int	set_ceiling_color(t_data *data, char *line)
 {
-	int (start), (i), (j), (color_idx) = 0;
+	int(start), (i), (j), (color_idx) = 0;
 	data->ceiling_color = ft_malloc(sizeof(int) * 3);
 	if (!data->ceiling_color)
 		return (1);
@@ -79,7 +79,7 @@ static int	set_ceiling_color(t_data *data, char *line)
 
 static int	is_polluted(char *line)
 {
-	int (commas), (has_letters), (i) = first_char_index(line, 1);
+	int(commas), (has_letters), (i) = first_char_index(line, 1);
 	commas = 0;
 	has_letters = 0;
 	while (line[i])
@@ -95,8 +95,9 @@ static int	is_polluted(char *line)
 	return (0);
 }
 
-int	set_colors(t_data *data, char *line)
+int	set_colors(t_data *data, char *line, t_map *map)
 {
+	(void)map;
 	if (!(ft_strlen(line) > 1 && line[1] && ft_isprint(line[1])))
 		return (1);
 	if (line[0] == 'F' && !(data->floor_color))

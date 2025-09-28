@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/28 02:24:33 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/28 20:10:00 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ void				init_dda(t_map *map, double angle_ray);
 // Graphisme
 int					get_pixel_from_texture_safe(t_tex *tex, int x, int y);
 void				my_pixel_put(t_tex *img, int x, int y, int color);
-int				init_texture(t_map *map, t_data *data);
+int					init_texture(t_map *map, t_data *data);
 void				draw_background(t_map *map);
 void				init_map(t_map *map, t_data *data);
 t_tex				*choose_texture(t_map *map, t_ray *ray);
@@ -205,6 +205,7 @@ void				draw_texture_one(t_map *map, int x);
 // Mouvement
 int					key_press(int keycode, void *param);
 int					key_release(int keycode, void *param);
+void				setup_hooks(t_map *map);
 
 // Mouvement_utils
 
@@ -225,7 +226,7 @@ void				exit_safe(t_map *map);
 
 // parsing.c
 
-int					parsing(t_data *data);
+int					parsing(t_data *data, t_map *map);
 void				parse_player(t_map *map, t_data *data);
 
 // check_borders.c
@@ -239,7 +240,7 @@ int					verify_last_map_element(t_data *data, int i);
 
 // set_colors.c
 
-int					set_colors(t_data *data, char *line);
+int					set_colors(t_data *data, char *line, t_map *map);
 
 // set_map.c
 
@@ -267,3 +268,7 @@ int					find_last_map_element(char *line);
 
 int					verify_texture_paths(t_data *data);
 int					verify_colors(t_data *data);
+void				error_texture_NO(t_map *map, t_data *data);
+void				error_texture_EA(t_map *map, t_data *data);
+void				error_texture_WE(t_map *map, t_data *data);
+void				error_texture_SO(t_map *map, t_data *data);

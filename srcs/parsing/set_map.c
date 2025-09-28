@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 19:01:51 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/14 20:23:00 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/28 06:59:19 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,17 @@ char	**read_map(char *file)
 	if (!line)
 		return (ft_free(map), close(fd), write(2, "Error\nFailed to read map\n",
 				33), NULL);
+	// if (ft_strlen(line) == 0)
+	// {
+	// 	free(line);
+	// 	free(map);
+	// 	close(fd);
+	// 	exit(1);
+	// }
 	while (line)
 	{
-		t((map[rows++] = ft_strtrim(line, "\n"), free(line), 0));
+		map[rows++] = ft_strtrim(line, "\n");
+		free(line);
 		line = get_next_line(fd);
 	}
 	return (map[rows] = NULL, close(fd), map);
@@ -45,7 +53,7 @@ char	**clean_map(char **map)
 {
 	char	**new_map;
 
-	int (i), (y), (index), (len);
+	int(i), (y), (index), (len);
 	t((i = 0, y = 0, 0));
 	while (map[y])
 		y++;
@@ -72,7 +80,7 @@ char	**clean_map(char **map)
 
 int	get_map_start_and_end(t_data *data)
 {
-	int (found), (i) = 0;
+	int(found), (i) = 0;
 	found = 0;
 	while (data->map[i] && !found)
 	{
@@ -80,7 +88,7 @@ int	get_map_start_and_end(t_data *data)
 		{
 			data->map_start = i;
 			while (data->map[i] && (data->map[i][0] == '1'
-				|| data->map[i][0] == '0'))
+					|| data->map[i][0] == '0'))
 				i++;
 			data->map_end = i - 1;
 			found = 1;
@@ -95,7 +103,7 @@ int	get_map_start_and_end(t_data *data)
 
 void	set_map_highest_x(t_data *data)
 {
-	int (y) = data->map_start;
+	int(y) = data->map_start;
 	data->map_highest_x = 0;
 	while (data->map[y])
 	{

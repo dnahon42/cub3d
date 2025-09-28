@@ -6,7 +6,7 @@
 /*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/28 02:39:23 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:55:09 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	init_mlx(t_map *map)
 	map->win = mlx_new_window(map->mlx, WIDTH, HEIGHT, "Cub3d");
 }
 
-void	mother_parsing(t_data *data, int ac, char **av)
+void	mother_parsing(t_data *data, int ac, char **av, t_map *map)
 {
 	char	**tmp_map;
 	char	**old_map;
@@ -67,9 +67,11 @@ void	mother_parsing(t_data *data, int ac, char **av)
 	if (!tmp_map)
 		return ;
 	old_map = tmp_map;
+	if (!old_map)
+		return ;
 	data->map = clean_map(tmp_map);
 	free_map(old_map);
-	if (parsing(data))
+	if (parsing(data, map))
 	{
 		free_parsing(data);
 		return ;
@@ -90,7 +92,7 @@ int	main(int ac, char **av)
 	ray = (t_ray){0};
 	map.dda = &dda;
 	map.ray = &ray;
-	mother_parsing(&data, ac, av);
+	mother_parsing(&data, ac, av, &map);
 	if (DEBUG)
 		info_debug(&data);
 	parse_player(&map, &data);
@@ -103,5 +105,6 @@ int	main(int ac, char **av)
 	mlx_hook(map.win, 2, 1, key_press, &map);
 	mlx_hook(map.win, 3, 1, key_release, &map);
 	mlx_loop_hook(map.mlx, render_frame, &map);
+	setup_hooks(&map);
 	mlx_loop(map.mlx);
 }

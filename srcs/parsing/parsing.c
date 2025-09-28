@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 21:16:09 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/27 21:16:53 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/28 20:11:03 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,31 @@
 #include "../../libft/includes/get_next_line.h"
 #include "../../libft/includes/libft.h"
 
-int	parsing(t_data *data)
+void static	free_verify_colors(t_data *data, t_map *map)
 {
-	int (i) = -1;
+	int	j;
+
+	j = 0;
+	ft_putstr_fd(RED BOLD ERR_COLORS RESET, 2);
+	free(data->floor_color);
+	free(data->north_wall);
+	free(data->south_wall);
+	free(data->west_wall);
+	free(data->east_wall);
+	free(data->ceiling_color);
+	while (data->map[j])
+	{
+		free(data->map[j]);
+		j++;
+	}
+	free(data->map);
+	exit_safe(map);
+}
+int	parsing(t_data *data, t_map *map)
+{
+	int	j;
+
+	int(i) = -1;
 	if (get_map_start_and_end(data))
 		return (1);
 	if (verify_last_map_element(data, data->map_end + 1))
@@ -30,10 +52,11 @@ int	parsing(t_data *data)
 	{
 		if (set_wall_textures(data, data->map[i]) == 2)
 			return (ft_putstr_fd(RED BOLD ERR_DUPLICATE_TEXTURE RESET, 2), 1);
-		set_colors(data, data->map[i]);
+		set_colors(data, data->map[i], map);
 	}
+	j = 0;
 	if (verify_colors(data))
-		return (ft_putstr_fd(RED BOLD ERR_COLORS RESET, 2), 1);
+		free_verify_colors(data, map);
 	if (verify_texture_paths(data) == 1)
 		return (1);
 	data->map_height = data->map_end - data->map_start + 1;
@@ -44,7 +67,7 @@ void	parse_player(t_map *map, t_data *data)
 {
 	char	c;
 
-	int (x), (y) = -1;
+	int(x), (y) = -1;
 	while (++y < data->map_height)
 	{
 		x = -1;
@@ -67,4 +90,8 @@ void	parse_player(t_map *map, t_data *data)
 			}
 		}
 	}
+}
+void	setup_hooks(t_map *map)
+{
+	mlx_hook(map->win, 17, 0, (void *)exit_safe, map);
 }
