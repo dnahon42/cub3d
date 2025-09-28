@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/27 21:58:05 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/28 02:39:23 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	info_debug(t_data *data)
 {
-	int (i) = -1;
+	int(i) = -1;
 	printf(GREEN BOLD "Map after cleaning : \n" RESET);
 	while (data->map[++i])
 		printf("\033[41;37m%s\033[0m\n", data->map[i]);
@@ -39,50 +39,62 @@ static void	info_debug(t_data *data)
 	printf(BOLD CYAN "Map height : %d\n", data->map_height);
 	printf(BOLD CYAN "Map highest x : %d\n" RESET, data->map_highest_x);
 }
+static void	init_mlx(t_map *map)
+{
+	map->mlx = mlx_init();
+	if (!map->mlx)
+		return ;
+	map->buffer[0].img = mlx_new_image(map->mlx, WIDTH, HEIGHT);
+	map->buffer[0].addr = mlx_get_data_addr(map->buffer[0].img,
+			&map->buffer[0].bpp, &map->buffer[0].line_length,
+			&map->buffer[0].endian);
+	map->buffer[1].img = mlx_new_image(map->mlx, WIDTH, HEIGHT);
+	map->buffer[1].addr = mlx_get_data_addr(map->buffer[1].img,
+			&map->buffer[1].bpp, &map->buffer[1].line_length,
+			&map->buffer[1].endian);
+	map->current = 0;
+	map->win = mlx_new_window(map->mlx, WIDTH, HEIGHT, "Cub3d");
+}
 
+void	mother_parsing(t_data *data, int ac, char **av)
+{
+	char	**tmp_map;
+	char	**old_map;
+
+	if (validate_args(ac, av))
+		return ;
+	tmp_map = read_map(av[1]);
+	if (!tmp_map)
+		return ;
+	old_map = tmp_map;
+	data->map = clean_map(tmp_map);
+	free_map(old_map);
+	if (parsing(data))
+	{
+		free_parsing(data);
+		return ;
+	}
+	old_map = data->map;
+	data->map = make_map_rectangular(data);
+	free_map(old_map);
+}
 int	main(int ac, char **av)
 {
 	t_map	map;
 	t_ray	ray;
 	t_dda	dda;
-	char	**tmp_map;
-	char	**old_map;
 
 	t_data(data) = {0};
-	if (validate_args(ac, av))
-		return (1);
-	tmp_map = read_map(av[1]);
-	if (!tmp_map)
-		return (1);
-	old_map = tmp_map;
-	data.map = clean_map(tmp_map);
-	free_map(old_map);
-	if (parsing(&data))
-	{
-		free_parsing(&data);
-		return (1);
-	}
-	old_map = data.map;
-	data.map = make_map_rectangular(&data);
-	free_map(old_map);
+	map = (t_map){0};
+	dda = (t_dda){0};
+	ray = (t_ray){0};
+	map.dda = &dda;
+	map.ray = &ray;
+	mother_parsing(&data, ac, av);
 	if (DEBUG)
 		info_debug(&data);
-	free((map = (t_map){0}, dda = (t_dda){0}, ray = (t_ray){0}, NULL));
-	free((map.dda = &dda, map.ray = &ray, NULL));
 	parse_player(&map, &data);
-	map.mlx = mlx_init();
-	if (!map.mlx)
-		return (1);
-	map.buffer[0].img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
-	map.buffer[0].addr = mlx_get_data_addr(map.buffer[0].img,
-			&map.buffer[0].bpp, &map.buffer[0].line_length,
-			&map.buffer[0].endian);
-	map.buffer[1].img = mlx_new_image(map.mlx, WIDTH, HEIGHT);
-	map.buffer[1].addr = mlx_get_data_addr(map.buffer[1].img,
-			&map.buffer[1].bpp, &map.buffer[1].line_length,
-			&map.buffer[1].endian);
-	map.current = 0;
-	map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
+	init_mlx(&map);
 	if (init_texture(&map, &data))
 		return (free_parsing(&data), exit_safe(&map), 1);
 	init_map(&map, &data);

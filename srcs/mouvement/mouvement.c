@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouvement.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:25:19 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/27 21:40:18 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/28 02:08:45 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	ft_moove(t_map *map)
 {
-	map->move_speed = 0.3 * TILE_SIZE;
-	map->rot_speed = 0.25;
+	map->move_speed = 0.05 * TILE_SIZE;
+	map->rot_speed = 0.05;
 	map->new_pos_x = map->cx;
 	map->new_pos_y = map->cy;
 	if (map->flag_w)
