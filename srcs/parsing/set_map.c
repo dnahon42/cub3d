@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 19:01:51 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/29 16:47:20 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/29 17:09:51 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ char	**read_map(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (write(2, "Error\nFailed to open map\n", 26), NULL);
+		return (write(2, RED BOLD "Error\nFailed to open map\n" RESET, 39),
+			NULL);
 	map = ft_malloc(sizeof(char *) * 100000);
 	if (!map)
-		return (write(2, "Error\nMemory allocation failed\n", 32), close(fd),
-			NULL);
+		return (write(2, RED BOLD "Error\nMemory allocation failed\n" RESET,
+				45), close(fd), NULL);
 	rows = 0;
 	line = get_next_line(fd);
 	if (!line)
-		return (ft_free(map), close(fd), write(2, "Error\nFailed to read map\n",
-				26), NULL);
+		return (ft_free(map), close(fd), write(2,
+				RED BOLD "Error\nFailed to read map\n" RESET, 39), NULL);
 	while (line)
 	{
 		map[rows++] = ft_strtrim(line, "\n");

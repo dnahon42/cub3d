@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 16:45:49 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:58:15 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@
 # define YELLOW "\033[33m"
 # define CYAN "\033[36m"
 # define BOLD "\033[1m"
-# define ERR_TEXTURE "Error : Map textures must have .xpm file extension\n"
-# define ERR_COLORS "Error : Colors must have 3 values ranging from 0 to 255.\n"
-# define ERR_COLORS2 "Error : Invalid characters in color lines.\n"
-# define ERR_LAST_ELEMENT "Error : The map must be the last element of the file\n"
-# define ERR_WALL_MISSING "Error : The map is not enclosed by walls\n"
-# define ERR_MAP_ELEMENTS "Error : Invalid map elements\n"
-# define ERR_DUPLICATE_TEXTURE "Error : Duplicate textures\n"
-# define ERR_TEXTURE_MISSING "Error: A texture is missing\n"
-# define ERR_EAST_TEXTURE "Error: Failed to load east wall texture\n"
-# define ERR_NORTH_TEXTURE "Error: Failed to load north wall texture\n"
-# define ERR_WEST_TEXTURE "Error: Failed to load west wall texture\n"
-# define ERR_SOUTH_TEXTURE "Error: Failed to load south wall texture\n"
+# define ERR_TEXTURE "Error\nMap textures must have .xpm file extension\n"
+# define ERR_COLORS "Error\nColors must have 3 values ranging from 0 to 255.\n"
+# define ERR_COLORS2 "Error\nInvalid characters in color lines.\n"
+# define ERR_LAST_ELEMENT "Error\nThe map must be the last element of the file\n"
+# define ERR_WALL_MISSING "Error\nThe map is not enclosed by walls\n"
+# define ERR_MAP_ELEMENTS "Error\nInvalid map elements\n"
+# define ERR_DUPLICATE_TEXTURE "Error\nDuplicate textures\n"
+# define ERR_TEXTURE_MISSING "Error\nA texture is missing\n"
+# define ERR_EAST_TEXTURE "Error\nFailed to load east wall texture\n"
+# define ERR_NORTH_TEXTURE "Error\nFailed to load north wall texture\n"
+# define ERR_WEST_TEXTURE "Error\nFailed to load west wall texture\n"
+# define ERR_SOUTH_TEXTURE "Error\nFailed to load south wall texture\n"
 # define DEBUG 0
 
 // MLXXXXXXXXXXXXXXXXX
