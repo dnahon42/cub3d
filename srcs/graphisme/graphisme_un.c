@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphisme_un.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:21:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/28 06:40:44 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:45:57 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 int	init_texture(t_map *map, t_data *data)
 {
-	
-	error_texture_NO(map, data);
-	error_texture_SO(map, data);
-	error_texture_WE(map, data);
-	error_texture_EA(map, data);
+	error_texture_no(map, data);
+	error_texture_so(map, data);
+	error_texture_we(map, data);
+	error_texture_ea(map, data);
 	return (0);
 }
 
@@ -26,7 +25,7 @@ void	draw_background(t_map *map)
 {
 	char	*dst;
 
-	int(x), (y) = 0;
+	int (x), (y) = 0;
 	while (y < HEIGHT)
 	{
 		x = 0;
@@ -49,7 +48,7 @@ static int	*convert_char_map_to_int(char **char_map, int width, int height)
 {
 	int	*int_map;
 
-	int(j), (i) = -1;
+	int (j), (i) = -1;
 	int_map = malloc(sizeof(int) * width * height);
 	if (!int_map)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_colors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:56:25 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/28 19:57:55 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:46:40 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static unsigned long	rgb_to_hex(int *rgb)
 
 static int	set_floor_color(t_data *data, char *line)
 {
-	int(start), (i), (j), (color_idx) = 0;
+	int (start), (i), (j), (color_idx) = 0;
 	data->floor_color = ft_malloc(sizeof(int) * 3);
 	if (!data->floor_color)
 		return (1);
@@ -50,7 +50,7 @@ static int	set_floor_color(t_data *data, char *line)
 
 static int	set_ceiling_color(t_data *data, char *line)
 {
-	int(start), (i), (j), (color_idx) = 0;
+	int (start), (i), (j), (color_idx) = 0;
 	data->ceiling_color = ft_malloc(sizeof(int) * 3);
 	if (!data->ceiling_color)
 		return (1);
@@ -79,7 +79,7 @@ static int	set_ceiling_color(t_data *data, char *line)
 
 static int	is_polluted(char *line)
 {
-	int(commas), (has_letters), (i) = first_char_index(line, 1);
+	int (commas), (has_letters), (i) = first_char_index(line, 1);
 	commas = 0;
 	has_letters = 0;
 	while (line[i])
@@ -103,7 +103,7 @@ int	set_colors(t_data *data, char *line, t_map *map)
 	if (line[0] == 'F' && !(data->floor_color))
 	{
 		if (is_polluted(line))
-			return (1);
+			return (2);
 		if (set_floor_color(data, line))
 			return (1);
 	}

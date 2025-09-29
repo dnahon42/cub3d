@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/28 20:10:00 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:45:49 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define BOLD "\033[1m"
 # define ERR_TEXTURE "Error : Map textures must have .xpm file extension\n"
 # define ERR_COLORS "Error : Colors must have 3 values ranging from 0 to 255.\n"
+# define ERR_COLORS2 "Error : Invalid characters in color lines.\n"
 # define ERR_LAST_ELEMENT "Error : The map must be the last element of the file\n"
 # define ERR_WALL_MISSING "Error : The map is not enclosed by walls\n"
 # define ERR_MAP_ELEMENTS "Error : Invalid map elements\n"
@@ -268,7 +269,7 @@ int					find_last_map_element(char *line);
 
 int					verify_texture_paths(t_data *data);
 int					verify_colors(t_data *data);
-void				error_texture_NO(t_map *map, t_data *data);
-void				error_texture_EA(t_map *map, t_data *data);
-void				error_texture_WE(t_map *map, t_data *data);
-void				error_texture_SO(t_map *map, t_data *data);
+void				error_texture_no(t_map *map, t_data *data);
+void				error_texture_ea(t_map *map, t_data *data);
+void				error_texture_we(t_map *map, t_data *data);
+void				error_texture_so(t_map *map, t_data *data);

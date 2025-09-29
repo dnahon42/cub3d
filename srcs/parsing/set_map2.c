@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_map2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 19:41:17 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/28 19:56:09 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:47:51 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*make_map_row(char *src, int width, int is_top_or_bottom)
 {
 	char	*row;
 
-	int(line_len), (j) = -1;
+	int (line_len), (j) = -1;
 	line_len = ft_strlen(src);
 	row = ft_malloc(sizeof(char) * (width + 1));
 	if (!row)
@@ -52,9 +52,9 @@ static void	free_map_rows(char **map, int last_row)
 
 char	**make_map_rectangular(t_data *data)
 {
-	char **new_map;
+	char	**new_map;
 
-	int(map_rows), (row), (map_row) = data->map_start;
+	int (map_rows), (row), (map_row) = data->map_start;
 	map_rows = data->map_end - data->map_start + 1;
 	new_map = ft_malloc(sizeof(char *) * (map_rows + 1));
 	if (!new_map)
@@ -70,10 +70,9 @@ char	**make_map_rectangular(t_data *data)
 					0);
 		if (!new_map[row])
 			return (free_map_rows(new_map, row), NULL);
-
 		row++;
 		map_row++;
-		}
-		new_map[row] = NULL;
-		return (new_map);
 	}
+	new_map[row] = NULL;
+	return (new_map);
+}

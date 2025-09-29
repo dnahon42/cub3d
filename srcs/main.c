@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/28 19:55:09 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/29 16:41:50 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	info_debug(t_data *data)
 {
-	int(i) = -1;
+	int (i) = -1;
 	printf(GREEN BOLD "Map after cleaning : \n" RESET);
 	while (data->map[++i])
 		printf("\033[41;37m%s\033[0m\n", data->map[i]);
@@ -39,6 +39,7 @@ static void	info_debug(t_data *data)
 	printf(BOLD CYAN "Map height : %d\n", data->map_height);
 	printf(BOLD CYAN "Map highest x : %d\n" RESET, data->map_highest_x);
 }
+
 static void	init_mlx(t_map *map)
 {
 	map->mlx = mlx_init();
@@ -56,30 +57,32 @@ static void	init_mlx(t_map *map)
 	map->win = mlx_new_window(map->mlx, WIDTH, HEIGHT, "Cub3d");
 }
 
-void	mother_parsing(t_data *data, int ac, char **av, t_map *map)
+static int	mother_parsing(t_data *data, int ac, char **av, t_map *map)
 {
 	char	**tmp_map;
 	char	**old_map;
 
 	if (validate_args(ac, av))
-		return ;
+		return (1);
 	tmp_map = read_map(av[1]);
 	if (!tmp_map)
-		return ;
+		return (1);
 	old_map = tmp_map;
 	if (!old_map)
-		return ;
+		return (1);
 	data->map = clean_map(tmp_map);
 	free_map(old_map);
 	if (parsing(data, map))
 	{
 		free_parsing(data);
-		return ;
+		return (1);
 	}
 	old_map = data->map;
 	data->map = make_map_rectangular(data);
 	free_map(old_map);
+	return (0);
 }
+
 int	main(int ac, char **av)
 {
 	t_map	map;
@@ -92,13 +95,13 @@ int	main(int ac, char **av)
 	ray = (t_ray){0};
 	map.dda = &dda;
 	map.ray = &ray;
-	mother_parsing(&data, ac, av, &map);
+	if (mother_parsing(&data, ac, av, &map))
+		return (1);
 	if (DEBUG)
 		info_debug(&data);
 	parse_player(&map, &data);
 	init_mlx(&map);
-	if (init_texture(&map, &data))
-		return (free_parsing(&data), exit_safe(&map), 1);
+	init_texture(&map, &data);
 	init_map(&map, &data);
 	map.data = &data;
 	free_parsing(&data);
