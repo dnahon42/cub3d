@@ -16,10 +16,10 @@ MLX_FLAGS   = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 LDFLAGS     = -L$(LIBFT_DIR) -lft $(MLX_FLAGS)
 
 # --- Includes ---
-INC_DIR     = ./include
+INC_DIR     = ./includes
 INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
 
-# --- Sources (liste manuelle) ---
+# --- Sources ---
 SRC = \
 	./srcs/main.c \
 	./srcs/free.c \
@@ -41,9 +41,9 @@ SRC = \
 	./srcs/parsing/verify_textures_and_colors.c \
 	./srcs/parsing/error_texture.c \
 
-
-
-OBJ = $(SRC:.c=.o)
+OBJ        = $(SRC:.c=.o)
+DEP_DIR    = ./dependencies
+DEP        = $(addprefix $(DEP_DIR)/, $(notdir $(OBJ:.o=.d)))
 
 # --- Colors ---
 GREEN   = \033[0;32m
@@ -53,7 +53,10 @@ CYAN    = \033[0;36m
 NC      = \033[0m
 
 # --- Rules ---
-all: $(NAME)
+all: $(DEP_DIR) $(NAME)
+
+$(DEP_DIR):
+	@mkdir -p $(DEP_DIR)
 
 $(NAME): $(OBJ)
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
@@ -63,11 +66,12 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@echo "$(CYAN)⚙️  Compiling $(NC)$<"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MF $(DEP_DIR)/$(notdir $(@:.o=.d)) -c $< -o $@
 
 clean:
 	@echo "$(RED)🧹 Suppression des fichiers objets...$(NC)"
 	@$(RM) $(OBJ)
+	@$(RM) -r $(DEP_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(MLX_DIR) clean
 
@@ -78,8 +82,10 @@ fclean: clean
 
 re: fclean all
 
-debug: $(OBJ)
+debug: $(DEP_DIR) $(OBJ)
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 	@$(MAKE) -C $(MLX_DIR) --no-print-directory
 	@echo "$(YELLOW)🔍 Building $(NAME) with debug flags$(NC)"
 	@$(CC) $(DEBUGFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
+
+-include $(DEP)

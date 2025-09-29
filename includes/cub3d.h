@@ -6,14 +6,14 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 16:58:15 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/29 18:40:10 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE3D_H
 # define CUBE3D_H
 
-# define FOV 70
+# define FOV 60
 # include "../libft/includes/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include <math.h>

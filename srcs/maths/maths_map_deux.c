@@ -6,30 +6,30 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:17:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 16:44:01 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/29 19:06:01 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	ft_draw_all_ray(t_map *map, t_ray *ray)
-{
-	int		i;
-	double	angle_step;
-	double	angle_ray;
+// void	ft_draw_all_ray(t_map *map, t_ray *ray)
+// {
+// 	int		i;
+// 	double	angle_step;
+// 	double	angle_ray;
 
-	i = 0;
-	ray->fov = 60 * (M_PI / 180);
-	angle_step = ray->fov / (double)WIDTH;
-	while (i < WIDTH)
-	{
-		angle_ray = map->angle - ray->fov / 2 + i * angle_step;
-		init_dda(map, angle_ray);
-		draw_line(map, map->cx, map->cy, (int)ray->impact_x, (int)ray->impact_y,
-			0x00000);
-		i++;
-	}
-}
+// 	i = 0;
+// 	ray->fov = FOV * (M_PI / 180);
+// 	angle_step = ray->fov / (double)WIDTH;
+// 	while (i < WIDTH)
+// 	{
+// 		angle_ray = map->angle - ray->fov / 2 + i * angle_step;
+// 		init_dda(map, angle_ray);
+// 		draw_line(map, map->cx, map->cy, (int)ray->impact_x, (int)ray->impact_y,
+// 			0x00000);
+// 		i++;
+// 	}
+// }
 
 static void	get_dda_three(t_map *map, t_ray *ray)
 {

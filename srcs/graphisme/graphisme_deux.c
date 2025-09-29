@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 04:16:03 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 16:43:59 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/29 19:06:13 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	render_frame(t_map *map)
 
 	buf = &map->buffer[map->current];
 	draw_background(map);
-	map->ray->fov = 60 * (M_PI / 180);
+	map->ray->fov = FOV * (M_PI / 180);
 	angle_step = map->ray->fov / (double)WIDTH;
 	x = 0;
 	while (x < WIDTH)
@@ -56,7 +56,6 @@ int	render_frame(t_map *map)
 	}
 	draw_map(map);
 	draw_player(map);
-	ft_draw_all_ray(map, map->ray);
 	mlx_put_image_to_window(map->mlx, map->win, map->buffer[map->current].img,
 		0, 0);
 	map->current = (map->current + 1) % 2;
