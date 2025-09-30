@@ -14,7 +14,7 @@
 
 static void	info_debug(t_data *data)
 {
-	int (i) = -1;
+	int(i) = -1;
 	printf(GREEN BOLD "Map after cleaning : \n" RESET);
 	while (data->map[++i])
 		printf("\033[41;37m%s\033[0m\n", data->map[i]);
@@ -54,7 +54,6 @@ static void	init_mlx(t_map *map)
 			&map->buffer[1].bpp, &map->buffer[1].line_length,
 			&map->buffer[1].endian);
 	map->current = 0;
-	map->win = mlx_new_window(map->mlx, WIDTH, HEIGHT, "Cub3d");
 }
 
 static int	mother_parsing(t_data *data, int ac, char **av, t_map *map)
@@ -93,8 +92,7 @@ int	main(int ac, char **av)
 	map = (t_map){0};
 	dda = (t_dda){0};
 	ray = (t_ray){0};
-	map.dda = &dda;
-	map.ray = &ray;
+	t((map.dda = &dda, map.ray = &ray, 0));
 	if (mother_parsing(&data, ac, av, &map))
 		return (1);
 	if (DEBUG)
@@ -105,6 +103,7 @@ int	main(int ac, char **av)
 	init_map(&map, &data);
 	map.data = &data;
 	free_parsing(&data);
+	map.win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "Cub3d");
 	mlx_hook(map.win, 2, 1, key_press, &map);
 	mlx_hook(map.win, 3, 1, key_release, &map);
 	mlx_loop_hook(map.mlx, render_frame, &map);
