@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:26:53 by dnahon            #+#    #+#             */
-/*   Updated: 2025/07/08 20:45:03 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:02:41 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*read_to_stash(int fd, char *stash)
 	if (!buffer)
 		return (free(stash), NULL);
 	bytes_read = 1;
-	while (!ft_strchr(stash, '\n') && bytes_read > 0)
+	while (!ft_strchr3(stash, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)

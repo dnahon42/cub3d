@@ -3,34 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   maths_map_un.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:12:40 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/27 05:21:03 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/29 19:06:03 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cube3d.h"
+#include "../../includes/cub3d.h"
 
-void	draw_vector(t_map *map)
+static void	draw_square(t_map *map, int x, int y, int color)
 {
-	int	l;
-	int	i;
-	int	x;
-	int	y;
+	int	dx;
+	int	dy;
 
-	x = 0;
-	y = 0;
-	map->dir_x = cos(map->angle);
-	map->dir_y = sin(map->angle);
-	l = 15;
-	i = 0;
-	while (i < l)
+	dy = 0;
+	while (dy < TILE_SIZE)
 	{
-		x = map->cx + i * map->dir_x;
-		y = map->cy + i * map->dir_y;
-		my_pixel_put(&map->buffer[map->current], x, y, 0x0000FF);
-		i++;
+		dx = 0;
+		while (dx < TILE_SIZE)
+		{
+			if (dx == 0 || dy == 0)
+				my_pixel_put(&map->buffer[map->current], x * TILE_SIZE + dx, y
+					* TILE_SIZE + dy, 0x000000);
+			else
+				my_pixel_put(&map->buffer[map->current], x * TILE_SIZE + dx, y
+					* TILE_SIZE + dy, color);
+			dx++;
+		}
+		dy++;
 	}
 }
 
@@ -80,63 +81,39 @@ void	draw_map(t_map *map)
 	}
 }
 
-void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
-{
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+// void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
+// {
+// 	int	dx;
+// 	int	dy;
+// 	int	sx;
+// 	int	sy;
+// 	int	err;
+// 	int	e2;
 
-	dx = abs(x1 - x0);
-	dy = -abs(y1 - y0);
-	sx = (x0 < x1);
-	if (sx == 0)
-		sx = -1;
-	sy = (y0 < y1);
-	if (sy == 0)
-		sy = -1;
-	err = dx + dy;
-	while (1)
-	{
-		my_pixel_put(&map->buffer[map->current], x0, y0, color);
-		if (x0 == x1 && y0 == y1)
-			break ;
-		e2 = 2 * err;
-		if (e2 >= dy)
-		{
-			err += dy;
-			x0 += sx;
-		}
-		if (e2 <= dx)
-		{
-			err += dx;
-			y0 += sy;
-		}
-	}
-}
-
-void	draw_square(t_map *map, int x, int y, int color)
-{
-	int	dx;
-	int	dy;
-
-	// case to pixel
-	dy = 0;
-	while (dy < TILE_SIZE)
-	{
-		dx = 0;
-		while (dx < TILE_SIZE)
-		{
-			if (dx == 0 || dy == 0)
-				my_pixel_put(&map->buffer[map->current], x * TILE_SIZE + dx, y
-					* TILE_SIZE + dy, 0x000000);
-			else
-				my_pixel_put(&map->buffer[map->current], x * TILE_SIZE + dx, y
-					* TILE_SIZE + dy, color);
-			dx++;
-		}
-		dy++;
-	}
-}
+// 	dx = abs(x1 - x0);
+// 	dy = -abs(y1 - y0);
+// 	sx = (x0 < x1);
+// 	if (sx == 0)
+// 		sx = -1;
+// 	sy = (y0 < y1);
+// 	if (sy == 0)
+// 		sy = -1;
+// 	err = dx + dy;
+// 	while (1)
+// 	{
+// 		my_pixel_put(&map->buffer[map->current], x0, y0, color);
+// 		if (x0 == x1 && y0 == y1)
+// 			break ;
+// 		e2 = 2 * err;
+// 		if (e2 >= dy)
+// 		{
+// 			err += dy;
+// 			x0 += sx;
+// 		}
+// 		if (e2 <= dx)
+// 		{
+// 			err += dx;
+// 			y0 += sy;
+// 		}
+// 	}
+// }
