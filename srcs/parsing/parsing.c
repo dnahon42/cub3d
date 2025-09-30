@@ -14,7 +14,7 @@
 #include "../../libft/includes/get_next_line.h"
 #include "../../libft/includes/libft.h"
 
-void static	free_verify_colors(t_data *data, t_map *map)
+static void	free_verify_colors(t_data *data, t_map *map)
 {
 	int	j;
 
