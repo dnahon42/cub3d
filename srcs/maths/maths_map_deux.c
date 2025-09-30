@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths_map_deux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:17:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 19:06:01 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:57:18 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 	{
 // 		angle_ray = map->angle - ray->fov / 2 + i * angle_step;
 // 		init_dda(map, angle_ray);
-// 		draw_line(map, map->cx, map->cy, (int)ray->impact_x, (int)ray->impact_y,
+// 		init_line(map, map->cx, map->cy, (int)ray->impact_x, (int)ray->impact_y,
 // 			0x00000);
 // 		i++;
 // 	}
@@ -75,8 +75,6 @@ static void	get_dda_two(t_map *map, t_ray *ray)
 	get_dda_three(map, map->ray);
 }
 
-// ici je cherche le sens de mon rayon je calcule ensuite la distance
-// jusqu'au premier mur vertical et horizontale
 static void	get_dda_one(t_map *map)
 {
 	if (map->dda->ray_dir_x < 0)
@@ -106,13 +104,6 @@ static void	get_dda_one(t_map *map)
 	get_dda_two(map, map->ray);
 }
 
-// ici j'init mes valeurs pour cela je transforme mon angle_ray en vecteur en x
-// et y il est determiner par l'angle initial de mon joueur
-// je les stock car je vais en avoir besoin pour savoir
-// dans quel sens je touche le mur
-// je convertis aussi la postion de joueur en pixel donc
-// si tu effectues le calcul tu tombera sur la position initial du joueur
-// je calcule la difference  entre verticale a la suivante
 void	init_dda(t_map *map, double angle_ray)
 {
 	map->dda->hit = 0;

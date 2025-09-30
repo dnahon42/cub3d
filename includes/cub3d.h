@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/30 15:42:18 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:56:16 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,12 @@ typedef struct s_map
 	float			new_pos_x;
 	int				x;
 	int				y;
+	int				dx;
+	int				dy;
+	int				sx;
+	int				sy;
+	int				err;
+	int				e2;
 
 	int				mapx;
 	int				mapy;
@@ -199,6 +205,8 @@ void				init_map(t_map *map, t_data *data);
 t_tex				*choose_texture(t_map *map, t_ray *ray);
 int					render_frame(t_map *map);
 void				draw_texture_one(t_map *map, int x);
+// void				init_line(t_map *map, int x0, int y0, int x1, int y1,
+// 						int color);
 
 // Mouvement
 int					key_press(int keycode, void *param);

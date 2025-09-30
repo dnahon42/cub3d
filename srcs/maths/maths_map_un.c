@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths_map_un.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:12:40 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 19:06:03 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:56:05 by kiteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,40 +80,37 @@ void	draw_map(t_map *map)
 		map->x++;
 	}
 }
-
 // void	draw_line(t_map *map, int x0, int y0, int x1, int y1, int color)
 // {
-// 	int	dx;
-// 	int	dy;
-// 	int	sx;
-// 	int	sy;
-// 	int	err;
-// 	int	e2;
-
-// 	dx = abs(x1 - x0);
-// 	dy = -abs(y1 - y0);
-// 	sx = (x0 < x1);
-// 	if (sx == 0)
-// 		sx = -1;
-// 	sy = (y0 < y1);
-// 	if (sy == 0)
-// 		sy = -1;
-// 	err = dx + dy;
 // 	while (1)
 // 	{
 // 		my_pixel_put(&map->buffer[map->current], x0, y0, color);
 // 		if (x0 == x1 && y0 == y1)
 // 			break ;
-// 		e2 = 2 * err;
-// 		if (e2 >= dy)
+// 		map->e2 = 2 * map->err;
+// 		if (map->e2 >= map->dy)
 // 		{
-// 			err += dy;
-// 			x0 += sx;
+// 			map->err += map->dy;
+// 			x0 += map->sx;
 // 		}
-// 		if (e2 <= dx)
+// 		if (map->e2 <= map->dx)
 // 		{
-// 			err += dx;
-// 			y0 += sy;
+// 			map->err += map->dx;
+// 			y0 += map->sy;
 // 		}
 // 	}
+// }
+// void	init_line(t_map *map, int x0, int y0, int x1, int y1, int color)
+// {
+// 	(void)color;
+// 	map->dx = abs(x1 - x0);
+// 	map->dy = -abs(y1 - y0);
+// 	map->sx = (x0 < x1);
+// 	if (map->sx == 0)
+// 		map->sx = -1;
+// 	map->sy = (y0 < y1);
+// 	if (map->sy == 0)
+// 		map->sy = -1;
+// 	map->err = map->dx + map->dy;
+// 	draw_line(map,x0,y0,x1,y1,color);
 // }
