@@ -46,7 +46,7 @@ void	error_texture_ea(t_map *map, t_data *data)
 		free_parsing(data);
 		exit_safe((printf(BOLD RED ERR_EAST_TEXTURE RESET), map));
 	}
-	map->mur_ea.addr = mlx_get_data_addr(map->mur_no.img, &map->mur_ea.bpp,
+	map->mur_ea.addr = mlx_get_data_addr(map->mur_ea.img, &map->mur_ea.bpp,
 			&map->mur_ea.line_length, &map->mur_ea.endian);
 }
 
