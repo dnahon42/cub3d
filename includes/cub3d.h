@@ -6,12 +6,12 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 18:40:10 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:42:18 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # define FOV 60
 # include "../libft/includes/libft.h"
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
 # ifndef TILE_SIZE
 #  define TILE_SIZE 10
 # endif
@@ -86,15 +87,16 @@ typedef struct s_tex
 }					t_tex;
 
 // MATHSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 typedef struct s_ray
 {
 	double			fov;
 	double			angle_ray;
 	double			impact_x;
 	double			impact_y;
-	int				lineHauteur;
-	int				drawStart;
-	int				drawEnd;
+	int				linehauteur;
+	int				drawstart;
+	int				drawend;
 	int				side;
 	t_tex			*texture;
 	double			dir_x;
@@ -138,19 +140,17 @@ typedef struct s_data
 // Mother Struct
 typedef struct s_map
 {
-	// MLX
 	void			*mlx;
 	void			*win;
 
 	int				current;
 	t_tex			mur;
 	t_tex			sol;
-	t_tex			mur_NO;
-	t_tex			mur_SO;
-	t_tex			mur_WE;
-	t_tex			mur_EA;
+	t_tex			mur_no;
+	t_tex			mur_so;
+	t_tex			mur_we;
+	t_tex			mur_ea;
 
-	// Keyboard
 	int				flag_w;
 	int				flag_s;
 	int				flag_a;
@@ -161,13 +161,11 @@ typedef struct s_map
 	float			move_speed;
 	float			rot_speed;
 
-	// Maths
 	float			new_pos_y;
 	float			new_pos_x;
 	int				x;
 	int				y;
 
-	// Map
 	int				mapx;
 	int				mapy;
 	double			dir_x;
@@ -182,13 +180,12 @@ typedef struct s_map
 	t_tex			buffer[2];
 	t_data			*data;
 }					t_map;
-#endif
 
 // MATHSSSSSSSSSSSSSSSSSS😭
 void				draw_player(t_map *map);
 void				draw_map(t_map *map);
-void				draw_line(t_map *map, int x0, int y0, int x1, int y1,
-						int color);
+// void				draw_line(t_map *map, int x0, int y0, int x1, int y1,
+// 						int color);
 void				get_dda(t_map *map, t_ray *ray);
 void				ft_draw_all_ray(t_map *map, t_ray *ray);
 void				init_dda(t_map *map, double angle_ray);
@@ -273,3 +270,5 @@ void				error_texture_no(t_map *map, t_data *data);
 void				error_texture_ea(t_map *map, t_data *data);
 void				error_texture_we(t_map *map, t_data *data);
 void				error_texture_so(t_map *map, t_data *data);
+
+#endif

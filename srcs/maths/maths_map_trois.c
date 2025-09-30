@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 21:20:38 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/27 21:37:49 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:41:02 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void	draw_texture_two(t_map *map, int col, int tex_x)
 	int		tex_y;
 	int		color;
 
-	step = (double)map->ray->texture->height / (double)map->ray->lineHauteur;
-	tex_pos = (map->ray->drawStart - HEIGHT / 2 + map->ray->lineHauteur / 2)
+	step = (double)map->ray->texture->height / (double)map->ray->linehauteur;
+	tex_pos = (map->ray->drawstart - HEIGHT / 2 + map->ray->linehauteur / 2)
 		* step;
-	y = map->ray->drawStart;
-	while (y <= map->ray->drawEnd)
+	y = map->ray->drawstart;
+	while (y <= map->ray->drawend)
 	{
 		tex_y = (int)tex_pos;
 		tex_pos += step;
@@ -62,13 +62,13 @@ void	draw_texture_one(t_map *map, int x)
 	dist = sqrt((map->ray->impact_x - map->cx) * (map->ray->impact_x - map->cx)
 			+ (map->ray->impact_y - map->cy) * (map->ray->impact_y - map->cy));
 	dist_corrected = dist * cos(map->ray->angle_ray - map->angle);
-	map->ray->lineHauteur = (TILE_SIZE * HEIGHT) / dist_corrected;
-	map->ray->drawStart = HEIGHT / 2 - map->ray->lineHauteur / 2;
-	map->ray->drawEnd = HEIGHT / 2 + map->ray->lineHauteur / 2;
-	if (map->ray->drawStart < 0)
-		map->ray->drawStart = 0;
-	if (map->ray->drawEnd >= HEIGHT)
-		map->ray->drawEnd = HEIGHT - 1;
+	map->ray->linehauteur = (TILE_SIZE * HEIGHT) / dist_corrected;
+	map->ray->drawstart = HEIGHT / 2 - map->ray->linehauteur / 2;
+	map->ray->drawend = HEIGHT / 2 + map->ray->linehauteur / 2;
+	if (map->ray->drawstart < 0)
+		map->ray->drawstart = 0;
+	if (map->ray->drawend >= HEIGHT)
+		map->ray->drawend = HEIGHT - 1;
 	if (!map->ray->texture || !map->ray->texture->addr
 		|| map->ray->texture->width <= 0 || map->ray->texture->height <= 0)
 		return ;

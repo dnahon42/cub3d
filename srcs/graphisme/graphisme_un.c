@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:21:18 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 16:45:57 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:44:39 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ t_tex	*choose_texture(t_map *map, t_ray *ray)
 		if (ray->dir_x > 0)
 		{
 			ray->flip_x = 0;
-			return (&map->mur_EA);
+			return (&map->mur_ea);
 		}
 		else
 		{
 			ray->flip_x = 0;
-			return (&map->mur_WE);
+			return (&map->mur_we);
 		}
 	}
 	else
@@ -96,9 +96,9 @@ t_tex	*choose_texture(t_map *map, t_ray *ray)
 		if (ray->dir_y > 0)
 		{
 			ray->flip_x = 1;
-			return (&map->mur_SO);
+			return (&map->mur_so);
 		}
 		else
-			return ((ray->flip_x = 0, &map->mur_NO));
+			return ((ray->flip_x = 0, &map->mur_no));
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:35:44 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/28 20:12:16 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:41:42 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	destroy_images(t_map *map)
 {
-	if (map->mur_NO.img)
-		mlx_destroy_image(map->mlx, map->mur_NO.img);
-	if (map->mur_SO.img)
-		mlx_destroy_image(map->mlx, map->mur_SO.img);
-	if (map->mur_WE.img)
-		mlx_destroy_image(map->mlx, map->mur_WE.img);
-	if (map->mur_EA.img)
-		mlx_destroy_image(map->mlx, map->mur_EA.img);
+	if (map->mur_no.img)
+		mlx_destroy_image(map->mlx, map->mur_no.img);
+	if (map->mur_so.img)
+		mlx_destroy_image(map->mlx, map->mur_so.img);
+	if (map->mur_we.img)
+		mlx_destroy_image(map->mlx, map->mur_we.img);
+	if (map->mur_ea.img)
+		mlx_destroy_image(map->mlx, map->mur_ea.img);
 }
 
 void	free_map(char **map)
