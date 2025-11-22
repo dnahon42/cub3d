@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:56:25 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/29 16:46:40 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/11/04 22:33:22 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	is_polluted(char *line)
 			has_letters = 1;
 		i++;
 	}
-	if (commas >= 3 || has_letters)
+	if (commas != 2 || has_letters)
 		return (1);
 	return (0);
 }

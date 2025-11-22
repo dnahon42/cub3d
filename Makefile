@@ -1,4 +1,4 @@
-NAME        = cub3d
+NAME        = cub3D
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -g3 -O0
 DEBUGFLAGS  = -Wall -Wextra -Werror -g3 -O0 -fsanitize=address -fsanitize=undefined -fsanitize=leak

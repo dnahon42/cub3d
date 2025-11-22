@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 15:51:38 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/30 15:56:16 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/11/22 21:53:19 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@
 # define ERR_NORTH_TEXTURE "Error\nFailed to load north wall texture\n"
 # define ERR_WEST_TEXTURE "Error\nFailed to load west wall texture\n"
 # define ERR_SOUTH_TEXTURE "Error\nFailed to load south wall texture\n"
-# define DEBUG 0
+# define DEBUG 1
 
 // MLXXXXXXXXXXXXXXXXX
 typedef struct s_tex
@@ -226,7 +226,7 @@ void				rotate_player(t_map *map);
 void				free_map(char **map);
 void				free_parsing(t_data *data);
 void				destroy_images(t_map *map);
-void				exit_safe(t_map *map);
+void				exit_safe(t_map *map, int exit_code);
 
 // ===== srcs/parsing/ =====
 

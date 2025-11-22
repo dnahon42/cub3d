@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 20:35:44 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/30 15:41:42 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/11/22 21:53:00 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_map(char **map)
 	free(map);
 }
 
-void	exit_safe(t_map *map)
+void	exit_safe(t_map *map, int exit_code)
 {
 	destroy_images(map);
 	if (map->buffer[0].img)
@@ -53,7 +53,7 @@ void	exit_safe(t_map *map)
 	free(map->mlx);
 	if (map->play)
 		free(map->play);
-	exit(1);
+	exit(exit_code);
 }
 
 void	free_parsing(t_data *data)

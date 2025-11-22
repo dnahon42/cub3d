@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 02:19:02 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/29 16:41:50 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/11/22 22:02:02 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	info_debug(t_data *data)
 {
-	int(i) = -1;
+	int (i) = -1;
 	printf(GREEN BOLD "Map after cleaning : \n" RESET);
 	while (data->map[++i])
 		printf("\033[41;37m%s\033[0m\n", data->map[i]);

@@ -6,7 +6,7 @@
 /*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/27 21:16:09 by dnahon            #+#    #+#             */
-/*   Updated: 2025/09/29 16:46:16 by dnahon           ###   ########.fr       */
+/*   Updated: 2025/11/22 21:55:48 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	free_verify_colors(t_data *data, t_map *map)
 		j++;
 	}
 	free(data->map);
-	exit_safe(map);
+	exit_safe(map, 1);
 }
 
 int	parsing(t_data *data, t_map *map)

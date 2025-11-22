@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouvement.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kiteixei <kiteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dnahon <dnahon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:25:19 by kiteixei          #+#    #+#             */
-/*   Updated: 2025/09/28 02:08:45 by kiteixei         ###   ########.fr       */
+/*   Updated: 2025/11/22 21:53:09 by dnahon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	key_press(int keycode, void *param)
 	else if (keycode == KEY_ROT_LEFT)
 		map->flag_left = 1;
 	else if (keycode == KEY_EXIT)
-		exit_safe(map);
+		exit_safe(map, 0);
 	return (refresh(map));
 }
 
